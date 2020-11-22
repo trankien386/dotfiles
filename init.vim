@@ -51,12 +51,10 @@ call plug#end()
 
 set nocompatible
 
-" Displaying line for code indented with tabs
-set list lcs=tab:\|\ 
-
-"Indent with tabs
-set tabstop=2 "number of spaces per TAB
-set shiftwidth=2 "same value as tabstop
+"Indent with spaces
+set softtabstop=2 "number of spaces per TAB
+set shiftwidth=2 "same value as softtabstop
+set expandtab "press TAB will output spaces instead
 
 "Automactically indent lines
 set autoindent
@@ -66,7 +64,7 @@ set smartindent
 set signcolumn=yes
 
 "Demonstrate line numbers on the left
-set number relativenumber
+set number 
 
 "File type detection
 filetype plugin indent on
@@ -178,6 +176,12 @@ set noswapfile
 
 "Reduce delay time for modes indicator in status line to change
 set ttimeoutlen=10
+
+" Use ripgrep instead
+if executable('rg')
+	set grepprg=rg\ --vimgrep
+	set grepformat=%f:%l:%c:%m
+endif
 
 
 
@@ -362,11 +366,9 @@ endfunction
 set statusline+=%{GitStatus()}
 
 " Vim Airline
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#left_alt_sep = '|'
-" let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='onedark'
+set noshowmode
 
 " VIM-AUTO-SAVE
 let g:auto_save = 1
@@ -375,5 +377,14 @@ let g:auto_save_silent = 1
 
 " VIM-POLYGLOT
 let g:polyglot_disabled = ['autoindent', 'sensible']
+
+" RAINBOW
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+\ 'ctermfgs': ['208', '198', '39', '34'],
+\ 'separately': {
+\   'html': 0,
+\ }
+\}
 
 

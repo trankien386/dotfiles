@@ -118,6 +118,7 @@ source /usr/local/share/fsh/fast-syntax-highlighting.plugin.zsh
 
 #Fzf
 [ -f /usr/local/share/fzf/.fzf.zsh ] && source /usr/local/share/fzf/.fzf.zsh
+
 #Fzf Options
 export FZF_DEFAULT_OPTS="
 	--height 80%
@@ -130,7 +131,7 @@ export FZF_DEFAULT_OPTS="
 	--info=inline
 	--prompt='⌁ '
 	--marker='✗'
-	
+	--pointer='➜'	
 "
 
 # Setting fd as the default source for fzf
@@ -141,14 +142,19 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type d"
 
 # Use fd instead of find for fzf completion
-_fzf_compgen_path() {
-  fd --exclude ".git" . "$1"
-}
+# _fzf_compgen_path() {
+#   fd --exclude ".git" . "$1"
+# }
 
 # Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
   fd --type d --exclude ".git" . "$1"
 }
+
+# FZF colorscheme
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+	--color pointer:76,prompt:39,info:215,spinner:203,marker:203
+'
 
 #Bat for man page
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
@@ -157,9 +163,6 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache
 zstyle ':completion:*' cache-path ~/.zsh/cache
-
-#Color for ls
-alias ls="colorls -A --gs --sd -t"
 
 #Show current directory on Terminal.app title bar
 	# path to my zsh functions folder:
@@ -179,4 +182,8 @@ export LSCOLORS=ExFxBxDxCxegedabagacad
 
 #Load zmv - better files moving command
 autoload -Uz zmv
+
+# Set path for ripgrep config file
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
 

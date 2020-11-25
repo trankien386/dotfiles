@@ -1,14 +1,48 @@
-" VIM CONFIGURATIONS
+" VIM ONLY CONFIGURATIONS
 
-set nocompatible
+syntax enable
 
-"Indent with spaces
-set softtabstop=2 "number of spaces per TAB
-set shiftwidth=2 "same value as softtabstop
-set expandtab "press TAB will output spaces instead
+"File type detection
+filetype plugin indent on
 
 "Automactically indent lines
 set autoindent
+
+set autoread
+
+"Mute error sound
+set belloff=all
+
+set nocompatible
+
+"Highlight all search matches
+set hlsearch
+
+"Move the cursor to the matched string, while typing the search pattern
+set incsearch
+
+"Show commands are typed
+set showcmd
+
+" Stop certain movements from always going to the first character of a line.
+set nostartofline
+
+"Reduce delay time for modes indicator in status line to change
+set ttimeoutlen=50
+
+" Read :h ttyfast
+set ttyfast
+
+"Shows multiple matches on one line when doing tab completion
+set wildmenu
+
+
+
+" VIM AND NVIM CONFIGURATIONS
+
+"Indent with spaces
+set softtabstop=2 shiftwidth=2 expandtab
+
 set smartindent
 
 "Sign Collumn on the left
@@ -16,9 +50,6 @@ set signcolumn=yes
 
 "Demonstrate line numbers on the left
 set number 
-
-"File type detection
-filetype plugin indent on
 
 "Open files in Chrome
 nnoremap <F12>c :exe ' !open -a /Applications/Google\ Chrome.app %'<CR>
@@ -32,40 +63,18 @@ noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
 
-" noremap h <NOP>
-noremap j <NOP>
-noremap k <NOP>
-" noremap l <NOP>
-noremap - <NOP>
-noremap + <NOP>
-
 "Enable vim fuzzy search
-set nocompatible      "Limit search to your project
 set path+=**          "Search all subdirectories and recursively
-set wildmenu          "Shows multiple matches on one line
 set wildignorecase
 
 "Open quickfix window automatically when grep
 autocmd QuickFixCmdPost *grep* cwindow
 
-"Show commands are typed
-set showcmd
-
-"Mute error sound
-set belloff=all
-
-"Move the cursor to the matched string, while typing the search pattern
-set incsearch
-
-"Highlight all search matches
-set hlsearch
-
 " Use case insensitive search, except when using capital letters
-set ignorecase
-set smartcase
+set ignorecase smartcase 
 
 "Access system clipboard
-set clipboard=unnamed
+set clipboard^=unnamed,unnamedplus
 
 "Paste texts from other windows to terminal VIM correctly
 set pastetoggle=<F2>
@@ -94,9 +103,6 @@ set rtp+=/usr/local/share/fzf
 "Switch buffers without saving changes
 set hidden
 
-" Stop certain movements from always going to the first character of a line.
-set nostartofline
-
 " Instead of failing a command because of unsaved changes, instead raise a dialogue asking if you wish to save changed files.
 set confirm
 
@@ -106,14 +112,10 @@ set virtualedit=block
 " Prevent updating screen while executing macros, registers and other commands that have not been typed
 set lazyredraw
 
-" Read :h ttyfast
-set ttyfast
-
 " Time to trigger CursorHold event in ms
 set updatetime=1000
 
 "Theme
-syntax on
 colorscheme onedark
 highlight Normal ctermbg=black
 
@@ -121,12 +123,7 @@ highlight Normal ctermbg=black
 nnoremap <leader>] :tag /<c-r>=expand('<cword>')<cr><cr>
 
 " No generate backup files and swap files
-set nobackup
-set nowritebackup
-set noswapfile
-
-"Reduce delay time for modes indicator in status line to change
-set ttimeoutlen=10
+set nobackup nowritebackup noswapfile
 
 " Use ripgrep instead
 if executable('rg')
@@ -138,83 +135,101 @@ endif
 
 " "	COC.NVIM CONFIGURATIONS
 
-" " Use `[g` and `]g` to navigate diagnostics
-" nmap <silent> [g <Plug>(coc-diagnostic-prev)
-" nmap <silent> ]g <Plug>(coc-diagnostic-next)
-"
-" " Remap keys for gotos
-" nmap <silent> gd <Plug>(coc-definition)
-" nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
-" nmap <silent> gr <Plug>(coc-references)
-"
-" " Highlight symbol under cursor on CursorHold
-" autocmd CursorHold * silent call CocActionAsync('highlight')
-" set background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=darkset background=dark"
-" " Remap for rename current word
-" nmap <leader>rn <Plug>(coc-rename)
-"
-" " Remap for format selected region
-" xmap <leader>f  <Plug>(coc-format-selected)
-" nmap <leader>f  <Plug>(coc-format-selected)
-"
-" augroup mygroup
-" autocmd!
-" " Setup formatexpr specified filetype(s).
-" autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-" " Update signature help on jump placeholder
-" autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-" augroup end
-"
-" " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-" xmap <leader>a  <Plug>(coc-codeaction-selected)
-" nmap <leader>a  <Plug>(coc-codeaction-selected)
-"
-" " Remap for do codeAction of current line
-" nmap <leader>ac  <Plug>(coc-codeaction)
-" " Fix autofix problem of current line
-" nmap <leader>qf  <Plug>(coc-fix-current)
-"
-" " Create mappings for function text object, requires document symbols feature of languageserver.
-" xmap if <Plug>(coc-funcobj-i)
-" xmap af <Plug>(coc-funcobj-a)
-" omap if <Plug>(coc-funcobj-i)
-" omap af <Plug>(coc-funcobj-a)
-"
-" " Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-" nmap <silent> <TAB> <Plug>(coc-range-select)
-" xmap <silent> <TAB> <Plug>(coc-range-select)
-"
-" " Use `:Format` to format current buffer
-" command! -nargs=0 Format :call CocAction('format')
-"
-" " Use `:Fold` to fold current buffer
-" command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-"
-" " use `:OR` for organize import of current buffer
-" command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-"
-" " Add status line support, for integration with other plugin, checkout `:h coc-status`
-" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-"
-" "<cr> for confirm completion
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-"
-" "TAB for trigger completion, completion confirm, snippet expand and jump like VSCode
-" inoremap <silent><expr> <TAB>
-" \ pumvisible() ? coc#_select_confirm() :
-" \ <SID>check_back_space() ? "\<TAB>" :
-" \ coc#refresh()
-"
-" function! s:check_back_space() abort
-" let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
-"
-" let g:coc_snippet_next = '<tab>'
-"
-" "Show documentation of symbol when doing cursor hover
-" nnoremap <silent> K :call CocActionAsync('doHover')<cr>
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+" Note coc#float#scroll works on neovim >= 0.4.0 or vim >= 8.2.0750
+nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Use tab for trigger completion with characters ahead and navigate.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
 
 
 
@@ -224,27 +239,19 @@ endif
 " Guard for distributions lacking the persistent_undo feature.
 if has('persistent_undo')
     " define a path to store persistent_undo files.
-    let target_path = expand('~/.vim/persisted-undo/')
+    let target_path = expand('~/.config/persisted-undo/')
+
     " create the directory and any parent directories
     " if the location does not exist.
     if !isdirectory(target_path)
         call system('mkdir -p ' . target_path)
     endif
+
     " point Vim to the defined undo directory.
     let &undodir = target_path
+
     " finally, enable undo persistence.
     set undofile
-endif
-
-" UNDOTREE
-" Undotree window layout
-if !exists('g:undotree_WindowLayout')
-    let g:undotree_WindowLayout = 2
-endif
-
-" Let undotree window get focus after being opened
-if !exists('g:undotree_SetFocusWhenToggle')
-    let g:undotree_SetFocusWhenToggle = 1
 endif
 
 " VIM-STARTIFY
@@ -262,13 +269,13 @@ function! s:gitUntracked()
 endfunction
 
 let g:startify_lists = [
-        \ { 'type': 'files',     'header': ['   MRU']            },
-        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
         \ { 'type': 'sessions',  'header': ['   Sessions']       },
-        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
         \ { 'type': function('s:gitModified'),  'header': ['   git modified']},
         \ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
         \ { 'type': 'commands',  'header': ['   Commands']       },
+        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+        \ { 'type': 'files',     'header': ['   MRU']            },
+        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
         \ ]
 
 "Vim-startify commands
@@ -278,13 +285,19 @@ let g:startify_commands = [
         \ ]
 
 "Vim-startify bookmarks
-let g:startify_bookmarks = [ {'c': '~/.vimrc'},]
+let g:startify_bookmarks = [ {'c': '~/.vimrc'}, {'z': '~/.zshrc'},]
 
 "Save/Load sessions
 let g:startify_session_dir = '~/.vim/sessions'
 
-"Auto save session when :SClose
+"Auto save session when leaving vim and before loading a new session via :SLoad 
 let g:startify_session_persistence = 0
+
+" When opening a file or bookmark, change to its directory
+let g:startify_change_to_dir = 1
+
+" filter recently used files
+let g:startify_skiplist = [ '.vimrc', '.zshrc', 'coc-settings.json']
 
 " VIM-GUTENTAGS
 let g:gutentags_add_default_project_roots = 0
@@ -325,6 +338,7 @@ set noshowmode
 let g:auto_save = 1
 let g:auto_save_no_updatetime = 1
 let g:auto_save_silent = 1
+let g:auto_save_events = ["TextChanged"]
 
 " VIM-POLYGLOT
 let g:polyglot_disabled = ['autoindent', 'sensible']
@@ -332,10 +346,20 @@ let g:polyglot_disabled = ['autoindent', 'sensible']
 " RAINBOW
 let g:rainbow_active = 1
 let g:rainbow_conf = {
-\ 'ctermfgs': ['208', '198', '39', '34'],
+\ 'ctermfgs': ['208', '171', '220', '204'],
 \ 'separately': {
 \   'html': 0,
+\   'css': 0,
 \ }
 \}
+
+" UNDOTREE
+let g:undotree_WindowLayout = 2
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_HighlightChangedText = 1
+let g:undotree_HighlightChangedWithSign = 1
+
+" VIM-DEVICONS
+let g:webdevicons_enable_startify = 1
 
 

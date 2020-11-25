@@ -135,20 +135,15 @@ export FZF_DEFAULT_OPTS="
 "
 
 # Setting fd as the default source for fzf
-export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden -E 'Library/''
 
 # To apply the command to CTRL-T and ALT-C as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd --type d"
-
-# Use fd instead of find for fzf completion
-# _fzf_compgen_path() {
-#   fd --exclude ".git" . "$1"
-# }
+export FZF_ALT_C_COMMAND="fd --type d --hidden -E 'Library/'"
 
 # Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
-  fd --type d --exclude ".git" . "$1"
+  fd --type d --hidden --exclude ".git" . "$1" 'Library/'
 }
 
 # FZF colorscheme
@@ -186,4 +181,7 @@ autoload -Uz zmv
 # Set path for ripgrep config file
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
+# Replace Vim with neovim
+alias vi="nvim"
+alias vim="nvim"
 

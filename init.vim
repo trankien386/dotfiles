@@ -5,26 +5,23 @@ let g:polyglot_disabled = ['autoindent', 'sensible']
 "Specify a directory for plugins
 call plug#begin()
 
-Plug'jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/coc.nvim'
 Plug 'Yggdroot/indentLine'
 Plug 'luochen1990/rainbow'
 Plug 'tomtom/tcomment_vim'
 Plug 'mbbill/undotree'
 Plug 'vim-airline/vim-airline'
-Plug '907th/vim-auto-save'
 Plug 'ap/vim-css-color',
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'sheerun/vim-polyglot'
 Plug 'prettier/vim-prettier'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
 Plug 'joshdick/onedark.vim'
-
-"Load at last
-Plug 'ryanoasis/vim-devicons'
+Plug '907th/vim-auto-save'
 
 " Initialize plugin system
 call plug#end()
@@ -124,9 +121,29 @@ if executable('rg')
 	set grepformat=%f:%l:%c:%m
 endif
 
+" Open new split panes to right, which feels more natural
+set splitright
 
+" Easier split navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
-" "	COC.NVIM CONFIGURATIONS
+" Clear last search pattern
+:command Clear let @/=""
+
+" Omni completion
+set completeopt+=longest,menuone,noinsert
+set omnifunc=syntaxcomplete#Complete
+imap <c-space> <c-x><c-o>
+
+" List chars
+set listchars=eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+
+"	COC.NVIM CONFIGURATIONS
+
+let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-css', 'coc-emmet', 'coc-tsserver', 'coc-snippets']
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -296,27 +313,10 @@ let g:gutentags_ctags_extra_args = [
   \ '--fields=+ailmnS',
   \ ]
 
-" VIM-GITGUTER
-" GitGutter fold all unchanged lines
-set foldtext=gitgutter#fold#foldtext()
-
-" Show added, modified, and removed lines in current buffer in status line
-function! GitStatus()
-  let [a,m,r] = GitGutterGetHunkSummary()
-  return printf('+%d ~%d -%d', a, m, r)
-endfunction
-set statusline+=%{GitStatus()}
-
 " Vim Airline
 let g:airline_powerline_fonts = 1
 let g:airline_theme='onedark'
 set noshowmode
-
-" VIM-AUTO-SAVE
-let g:auto_save = 1
-let g:auto_save_no_updatetime = 1
-let g:auto_save_silent = 1
-let g:auto_save_events = ["TextChanged"]
 
 " RAINBOW
 let g:rainbow_active = 1
@@ -334,13 +334,13 @@ let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_HighlightChangedText = 1
 let g:undotree_HighlightChangedWithSign = 1
 
-" VIM-DEVICONS
-let g:webdevicons_enable_startify = 1
-
 " INDENTLINE
 let g:indentLine_char = '⎸'
 let g:indentLine_fileTypeExclude = ['startify']
 let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_leadingSpaceChar = '·'
 
+" VIM-AUTO-SAVE
+let g:auto_save = 1
+let g:auto_save_silent = 1
 

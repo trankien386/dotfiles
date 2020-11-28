@@ -49,7 +49,7 @@ set smartindent
 set signcolumn=yes
 
 "Demonstrate line numbers on the left
-set number 
+set number relativenumber 
 
 "Open files in Chrome
 nnoremap <F12>c :exe ' !open -a /Applications/Google\ Chrome.app %'<CR>
@@ -64,7 +64,10 @@ noremap <Left> <NOP>
 noremap <Right> <NOP>
 
 "Enable vim fuzzy search
-set path+=**          "Search all subdirectories and recursively
+"Search all subdirectories and recursively
+set path+=**          
+
+set wildmode=longest,full
 set wildignorecase
 
 "Open quickfix window automatically when grep
@@ -77,8 +80,7 @@ set ignorecase smartcase
 set clipboard^=unnamed,unnamedplus
 
 "Paste texts from other windows to terminal VIM correctly
-set pastetoggle=<F2>
-
+set pastetoggle=<F2> 
 "No line wrap
 set nowrap
 
@@ -131,9 +133,31 @@ if executable('rg')
 	set grepformat=%f:%l:%c:%m
 endif
 
+" Open new split panes to right, which feels more natural
+set splitright
+
+" Easier split navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Clear last search pattern
+:command Clear let @/=""
+
+" Omni completion
+set completeopt+=longest,menuone,noinsert
+set omnifunc=syntaxcomplete#Complete
+imap <c-space> <c-x><c-o>
+
+" List chars
+set listchars=eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+
+"	COC.NVIM CONFIGURATIONS
 
 
-" "	COC.NVIM CONFIGURATIONS
+
+let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-css', 'coc-emmet', 'coc-tsserver', 'coc-snippets']
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -208,9 +232,9 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Use tab for trigger completion with characters ahead and navigate.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+  \ pumvisible() ? coc#_select_confirm() :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
@@ -238,57 +262,42 @@ endfunction
 " PERSISTENT UNDO
 " Guard for distributions lacking the persistent_undo feature.
 if has('persistent_undo')
-    " define a path to store persistent_undo files.
-    let target_path = expand('~/.config/persisted-undo/')
+  " define a path to store persistent_undo files.
+  let target_path = expand('~/.config/persisted-undo/')
 
-    " create the directory and any parent directories
-    " if the location does not exist.
-    if !isdirectory(target_path)
-        call system('mkdir -p ' . target_path)
-    endif
+  " create the directory and any parent directories
+  " if the location does not exist.
+  if !isdirectory(target_path)
+    call system('mkdir -p ' . target_path)
+  endif
 
-    " point Vim to the defined undo directory.
-    let &undodir = target_path
+  " point Vim to the defined undo directory.
+  let &undodir = target_path
 
-    " finally, enable undo persistence.
-    set undofile
+  " finally, enable undo persistence.
+  set undofile
 endif
 
 " VIM-STARTIFY
-" Returns all modified files of the current git repo
-" `2>/dev/null` makes the command fail quietly, so that when we are not in a git repo, the list will be empty
-function! s:gitModified()
-    let files = systemlist('git ls-files -m 2>/dev/null')
-    return map(files, "{'line': v:val, 'path': v:val}")
-endfunction
-
-" same as above, but show untracked files, honouring .gitignore
-function! s:gitUntracked()
-    let files = systemlist('git ls-files -o --exclude-standard 2>/dev/null')
-    return map(files, "{'line': v:val, 'path': v:val}")
-endfunction
-
 let g:startify_lists = [
-        \ { 'type': 'sessions',  'header': ['   Sessions']       },
-        \ { 'type': function('s:gitModified'),  'header': ['   git modified']},
-        \ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
-        \ { 'type': 'commands',  'header': ['   Commands']       },
-        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-        \ { 'type': 'files',     'header': ['   MRU']            },
-        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
-        \ ]
+  \ { 'type': 'sessions',  'header': ['   Sessions']       },
+  \ { 'type': 'commands',  'header': ['   Commands']       },
+  \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+  \ { 'type': 'files',     'header': ['   MRU']            },
+  \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+  \ ]
 
 "Vim-startify commands
 let g:startify_commands = [
-        \ ['Show netrw', ':Lex'],
-	\ ['Open Fuzzy Finder', ':FZF'],
-        \ ]
+  \ ['Show netrw', ':Lex'],
+  \ ['Open Fuzzy Finder', ':FZF'],
+  \ ]
 
 "Vim-startify bookmarks
-let g:startify_bookmarks = [ {'c': '~/.vimrc'}, {'z': '~/.zshrc'},]
+let g:startify_bookmarks = [ {'c': '~/.config/nvim/init.vim'}, {'z': '~/.zshrc'},]
 
 "Save/Load sessions
-let g:startify_session_dir = '~/.vim/sessions'
+let g:startify_session_dir = '~/.config/sessions'
 
 "Auto save session when leaving vim and before loading a new session via :SLoad 
 let g:startify_session_persistence = 0
@@ -314,34 +323,14 @@ let g:gutentags_generate_on_empty_buffer = 0
 
 " Include more info for tags
 let g:gutentags_ctags_extra_args = [
-      \ '--tag-relative=yes',
-      \ '--fields=+ailmnS',
-      \ ]
-
-" VIM-GITGUTER
-" GitGutter fold all unchanged lines
-set foldtext=gitgutter#fold#foldtext()
-
-" Show added, modified, and removed lines in current buffer in status line
-function! GitStatus()
-  let [a,m,r] = GitGutterGetHunkSummary()
-  return printf('+%d ~%d -%d', a, m, r)
-endfunction
-set statusline+=%{GitStatus()}
+  \ '--tag-relative=yes',
+  \ '--fields=+ailmnS',
+  \ ]
 
 " Vim Airline
 let g:airline_powerline_fonts = 1
 let g:airline_theme='onedark'
 set noshowmode
-
-" VIM-AUTO-SAVE
-let g:auto_save = 1
-let g:auto_save_no_updatetime = 1
-let g:auto_save_silent = 1
-let g:auto_save_events = ["TextChanged"]
-
-" VIM-POLYGLOT
-let g:polyglot_disabled = ['autoindent', 'sensible']
 
 " RAINBOW
 let g:rainbow_active = 1
@@ -359,7 +348,7 @@ let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_HighlightChangedText = 1
 let g:undotree_HighlightChangedWithSign = 1
 
-" VIM-DEVICONS
-let g:webdevicons_enable_startify = 1
-
+" VIM-AUTO-SAVE
+let g:auto_save = 1
+let g:auto_save_silent = 1
 

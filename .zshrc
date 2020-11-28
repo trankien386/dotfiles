@@ -185,3 +185,7 @@ export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 alias vi="nvim"
 alias vim="nvim"
 
+# zsh smart tab completion 
+zstyle ':completion:*' matcher-list '' '+m:{a-zA-Z}={A-Za-z}' '+r:|[._-]=* r:|=*' '+l:|=* r:|=*'
+
+

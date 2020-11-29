@@ -120,6 +120,7 @@ set updatetime=1000
 "Theme
 colorscheme onedark
 highlight Normal ctermbg=black
+highlight Pmenu ctermbg=235
 
 "Mapping <Leader>] for html to css tags jumping
 nnoremap <leader>] :tag /<c-r>=expand('<cword>')<cr><cr>
@@ -152,8 +153,6 @@ imap <c-space> <c-x><c-o>
 
 " List chars
 set listchars=eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
-
-
 
 "	COC.NVIM CONFIGURATIONS
 
@@ -340,8 +339,16 @@ let g:undotree_WindowLayout = 2
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_HighlightChangedText = 1
 let g:undotree_HighlightChangedWithSign = 1
+" Opening Diff panel in neovim will causes errors
+let g:undotree_DiffAutoOpen = 0
 
 " VIM-AUTO-SAVE
 let g:auto_save = 1
 let g:auto_save_silent = 1
+let g:auto_save_events = ["InsertLeave"]
+
+" VIM-BETTER-OMNICOMPLETE-JS-COMPLETION
+let g:vimjs#casesensistive = 0
+let g:vimjs#smartcomplete = 1
+let g:vimjs#chromeapis = 1
 

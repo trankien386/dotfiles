@@ -57,12 +57,6 @@ nnoremap <F12>c :exe ' !open -a /Applications/Google\ Chrome.app %'<CR>
 "Open files in Safari 
 nnoremap <F12>s :exe ' !open -a /Applications/Safari.app %'<CR>
 
-"Disable bad habits
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
-
 "Enable vim fuzzy search
 "Search all subdirectories and recursively
 set path+=**          
@@ -118,9 +112,11 @@ set lazyredraw
 set updatetime=1000
 
 "Theme
+highlight TabLine ctermfg=grey ctermbg=white
 colorscheme onedark
 highlight Normal ctermbg=black
 highlight Pmenu ctermbg=235
+highlight TabLineSel ctermbg=237
 
 "Mapping <Leader>] for html to css tags jumping
 nnoremap <leader>] :tag /<c-r>=expand('<cword>')<cr><cr>
@@ -130,8 +126,8 @@ set nobackup nowritebackup noswapfile
 
 " Use ripgrep instead
 if executable('rg')
-	set grepprg=rg\ --vimgrep
-	set grepformat=%f:%l:%c:%m
+      set grepprg=rg\ --vimgrep
+      set grepformat=%f:%l:%c:%m
 endif
 
 " Open new split panes to right, which feels more natural
@@ -154,6 +150,22 @@ imap <c-space> <c-x><c-o>
 " List chars
 set listchars=eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 
+" Switching buffers shortcut
+nnoremap ,b :b<space>
+map <Right> :bnext<CR>
+map <Left> :bprevious<CR>
+
+" Disable bad habits
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+
+" Auto save files when vim losts focus and switching buffers
+au FocusLost * update
+au BufLeave * update
+
+
+
+
 "	COC.NVIM CONFIGURATIONS
 
 let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-css', 'coc-emmet', 'coc-tsserver', 'coc-snippets', 'coc-prettier']
@@ -166,27 +178,27 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Use tab for trigger completion with characters ahead and navigate.
 inoremap <silent><expr> <TAB>
-  \ pumvisible() ? coc#_select_confirm() :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ coc#refresh()
+\ pumvisible() ? coc#_select_confirm() :
+\ <SID>check_back_space() ? "\<TAB>" :
+\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+let col = col('.') - 1
+return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
+if (index(['vim','help'], &filetype) >= 0)
+  execute 'h '.expand('<cword>')
+elseif (coc#rpc#ready())
+  call CocActionAsync('doHover')
+else
+  execute '!' . &keywordprg . " " . expand('<cword>')
+endif
 endfunction
 
 " Jump to next placeholder by <Tab>
@@ -200,11 +212,11 @@ xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+autocmd!
+" Setup formatexpr specified filetype(s).
+autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+" Update signature help on jump placeholder
+autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
 " Highlight symbol under cursor on CursorHold
@@ -323,6 +335,10 @@ let g:gutentags_ctags_extra_args = [
 let g:airline_powerline_fonts = 1
 let g:airline_theme='onedark'
 set noshowmode
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 " RAINBOW
 let g:rainbow_active = 1
@@ -341,14 +357,24 @@ let g:undotree_HighlightChangedText = 1
 let g:undotree_HighlightChangedWithSign = 1
 " Opening Diff panel in neovim will causes errors
 let g:undotree_DiffAutoOpen = 0
+nnoremap <F3> :UndotreeToggle<CR>
 
-" VIM-AUTO-SAVE
-let g:auto_save = 1
-let g:auto_save_silent = 1
-let g:auto_save_events = ["InsertLeave"]
+" INDENTLINE
+let g:indentLine_char = '⎸'
+let g:indentLine_fileTypeExclude = ['startify']
+let g:indentLine_leadingSpaceEnabled = 1
+let g:indentLine_leadingSpaceChar = '·'
 
 " VIM-BETTER-OMNICOMPLETE-JS-COMPLETION
 let g:vimjs#casesensistive = 0
 let g:vimjs#smartcomplete = 1
 let g:vimjs#chromeapis = 1
+
+" VIM-HARDTIME
+let g:hardtime_default_on = 1
+let g:list_of_normal_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>"]
+let g:list_of_visual_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:list_of_insert_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:hardtime_ignore_quickfix = 1
+let g:hardtime_allow_different_key = 1
 

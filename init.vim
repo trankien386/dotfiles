@@ -24,6 +24,7 @@ Plug '1995eaton/vim-better-javascript-completion'
 Plug 'takac/vim-hardtime'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'pacha/vem-tabline'
 
 " Initialize plugin system
 call plug#end()
@@ -106,10 +107,8 @@ set updatetime=1000
 colorscheme onedark
 highlight Normal ctermbg=black
 highlight Pmenu ctermbg=235
-highlight TabLineSel ctermbg=237
-highlight TabLine ctermfg=grey ctermbg=white
-highlight StatusLine ctermbg=237 ctermfg=256
-highlight StatuslineNC ctermbg=236 ctermfg=243
+highlight TabLineSel ctermbg=237 ctermfg=252
+highlight TabLine ctermfg=247
 
 "Mapping <Leader>] for html to css tags jumping
 nnoremap <leader>] :tag /<c-r>=expand('<cword>')<cr><cr>
@@ -144,7 +143,7 @@ imap <M-space> <c-x><c-o>
 set listchars=eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 
 " Switching buffers shortcut
-nnoremap ,b :b<space>
+nnoremap ,b :ls<cr>:b<space>
 map <Right> :bnext<CR>
 map <Left> :bprevious<CR>
 
@@ -188,7 +187,7 @@ let g:currentmode={
 	\}
 
 highlight leftSection ctermbg=237 ctermfg=254
-highlight rightSection ctermbg=237 ctermfg=254 cterm=NONE
+highlight rightSection ctermbg=237 ctermfg=252 cterm=NONE
 highlight subsection ctermbg=236 ctermfg=247
 highlight subsectionInactive ctermbg=236 ctermfg=242
 highlight middle ctermbg=NONE
@@ -528,4 +527,9 @@ let g:hardtime_allow_different_key = 1
 autocmd FileType fzf setlocal noruler | tnoremap <Esc> <Esc>
 let g:fzf_nvim_statusline = 0
 
+" VEM-TABLINE
+let g:vem_tabline_show_number='buffnr'
+let g:vem_tabline_number_symbol='⏐'
+let g:vem_tabline_right_arrow=''
+let g:vem_tabline_left_arrow=''
 

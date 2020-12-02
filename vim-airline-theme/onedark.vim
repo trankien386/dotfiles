@@ -70,13 +70,13 @@ function! airline#themes#onedark#refresh()
   let g:airline#themes#onedark#palette.visual = airline#themes#generate_color_map(s:V1, s:V2, s:V3, s:V4, s:V5, s:V6)
   let g:airline#themes#onedark#palette.visual_modified = g:airline#themes#onedark#palette.normal_modified
 
-  let s:IA1 = [ s:colors.black.gui, s:colors.white.gui, s:term_white, s:term_grey ]
-  let s:IA2 = [ s:colors.white.gui, s:colors.visual_grey.gui, s:term_white, s:term_grey ]
+  let s:IA1 = [ s:colors.black.gui, s:colors.white.gui, s:term_grey, s:term_grey ]
+  let s:IA2 = [ s:colors.white.gui, s:colors.visual_grey.gui, 242, s:term_grey ]
   let s:IA3 = s:IA2
   let g:airline#themes#onedark#palette.inactive = airline#themes#generate_color_map(s:IA1, s:IA2, s:IA3)
-  let g:airline#themes#onedark#palette.inactive_modified = {
-        \ 'airline_c': [ group[0], '', group[2], '', '' ]
-        \ }
+  "let g:airline#themes#onedark#palette.inactive_modified = {
+   "     \ 'airline_c': [ group[0], '', group[2], '', '' ]
+    "    \ }
 
   " Warning/Error styling code from vim-airline's ["base16" theme](https://github.com/vim-airline/vim-airline-themes/blob/master/autoload/airline/themes/base16.vim)
 

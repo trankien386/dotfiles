@@ -12,7 +12,6 @@ Plug 'Yggdroot/indentLine'
 Plug 'luochen1990/rainbow'
 Plug 'tomtom/tcomment_vim'
 Plug 'mbbill/undotree'
-Plug 'vim-airline/vim-airline'
 Plug 'ap/vim-css-color',
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
@@ -23,6 +22,8 @@ Plug 'tpope/vim-surround'
 Plug 'joshdick/onedark.vim'
 Plug '1995eaton/vim-better-javascript-completion'
 Plug 'takac/vim-hardtime'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -64,6 +65,7 @@ set clipboard^=unnamed,unnamedplus
 
 "Paste texts from other windows to terminal VIM correctly
 set pastetoggle=<F2> 
+
 "No line wrap
 set nowrap
 
@@ -101,11 +103,13 @@ set lazyredraw
 set updatetime=1000
 
 "Theme
-highlight TabLine ctermfg=grey ctermbg=white
 colorscheme onedark
 highlight Normal ctermbg=black
 highlight Pmenu ctermbg=235
 highlight TabLineSel ctermbg=237
+highlight TabLine ctermfg=grey ctermbg=white
+highlight StatusLine ctermbg=237 ctermfg=256
+highlight StatuslineNC ctermbg=236 ctermfg=243
 
 "Mapping <Leader>] for html to css tags jumping
 nnoremap <leader>] :tag /<c-r>=expand('<cword>')<cr><cr>
@@ -123,10 +127,10 @@ endif
 set splitright
 
 " Easier split navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+nnoremap <M-j> <C-W><C-J>
+nnoremap <M-k> <C-W><C-K>
+nnoremap <M-l> <C-W><C-L>
+nnoremap <M-h> <C-W><C-H>
 
 " Clear last search pattern
 :command Clear let @/=""
@@ -134,7 +138,7 @@ nnoremap <C-H> <C-W><C-H>
 " Omni completion
 set completeopt+=longest,menuone,noinsert
 set omnifunc=syntaxcomplete#Complete
-imap <c-space> <c-x><c-o>
+imap <M-space> <c-x><c-o>
 
 " List chars
 set listchars=eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
@@ -144,14 +148,156 @@ nnoremap ,b :b<space>
 map <Right> :bnext<CR>
 map <Left> :bprevious<CR>
 
-" Disable bad habits
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-
 " Auto save files when vim losts focus and switching buffers
-au FocusLost * update
-au BufLeave * update
+function AutoSave()
+    if @% != ""
+        " No filename for current buffer
+        update
+    endif
+endfunction
 
+au FocusLost * call AutoSave()
+au BufLeave * call AutoSave()
+
+" No auto cd to files directory
+set noautochdir
+
+" Terminal shortcut
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+
+" If open fzf windows inside terminal windows, this will auto remap <Esc>
+autocmd! BufLeave * if count('terminal',&buftype)
+  \ | tnoremap <Esc> <C-\><C-n>
+  \ | endif
+
+" Status line
+let g:currentmode={
+	\ 'n'  : 'NORMAL',
+	\ 'v'  : 'VISUAL',
+	\ 'V'  : 'V·LINE',
+	\ '' : 'V·BLOCK',
+	\ 's'  : 'SELECT',
+	\ 'S'  : 'S·LINE',
+	\ '' : 'S·BLOCK',
+	\ 'i'  : 'INSERT',
+	\ 'R'  : 'REPLACE',
+	\ 'c'  : 'COMMAND',
+	\}
+
+highlight leftSection ctermbg=237 ctermfg=254
+highlight rightSection ctermbg=237 ctermfg=254 cterm=NONE
+highlight subsection ctermbg=236 ctermfg=247
+highlight subsectionInactive ctermbg=236 ctermfg=242
+highlight middle ctermbg=NONE
+highlight middleInactive ctermbg=NONE ctermfg=242
+
+function! ActiveStatusLine()
+  highlight leftSection cterm=bold
+  setlocal laststatus=2
+  setlocal statusline=
+  setlocal statusline+=%#leftSection#
+  setlocal statusline+=\ %{g:currentmode[mode()]}
+  setlocal statusline+=\ %#subsection#
+  setlocal statusline+=\ %{Signify()}
+  setlocal statusline+=\ %{FugitiveHead()}
+  setlocal statusline+=\ %#middle#
+  setlocal statusline+=\ %f
+  setlocal statusline+=\ %m
+  setlocal statusline+=\ %h
+  setlocal statusline+=\ %w
+  setlocal statusline+=%<
+  setlocal statusline+=\ %{CocNvimDiagnostic()}
+  setlocal statusline+=%=
+  setlocal statusline+=%{gutentags#statusline()}
+  setlocal statusline+=\ %#rightSection#
+  setlocal statusline+=\ %p%%
+  setlocal statusline+=\ ☰
+  setlocal statusline+=\ %l/%L\ 
+  setlocal statusline+=\:\ %c\ 
+endfunction
+
+function! InactiveStatusLine()
+  setlocal laststatus=2
+  setlocal statusline=
+  setlocal statusline+=%#subsectionInactive#
+  setlocal statusline+=\ %{Signify()}
+  setlocal statusline+=\ %{FugitiveHead()}
+  setlocal statusline+=\ %#middleInactive#
+  setlocal statusline+=%<
+  setlocal statusline+=\ %F
+  setlocal statusline+=\ %m
+endfunction
+
+function! TerminalStatusLine()
+  setlocal laststatus=2
+  setlocal statusline=
+  setlocal statusline+=%#leftSection#
+  setlocal statusline+=\ %{toupper(mode())}
+  setlocal statusline+=\ %#subsection#
+  setlocal statusline+=\ %{strpart(expand('%f'),16,23)}
+  setlocal statusline+=\ %#middle#
+  tnoremap <Esc> <C-\><C-n>
+endfunction
+
+augroup statusline
+  autocmd!
+
+  " Statusline for specific windows
+  autocmd FileType netrw setlocal statusline=%#leftSection#\ Netrw\ %#middle# | hi leftSection cterm=NONE
+  autocmd FileType startify setlocal statusline=%#leftSection#\ Startify\ %#middle# | hi leftSection cterm=NONE
+  autocmd FileType undotree setlocal statusline=%!t:undotree.GetStatusLine()
+  autocmd TermOpen * call TerminalStatusLine()
+
+  " Active, Inactive statusline for vim windows
+  autocmd BufEnter,WinEnter * if !count(['netrw','startify','undotree'],&filetype) && !count('terminal',&buftype)
+    \ | call ActiveStatusLine()
+    \ | endif
+  autocmd BufLeave,WinLeave * if !count(['netrw','startify','undotree'],&filetype) && !count('terminal',&buftype)
+    \ | call InactiveStatusLine()
+    \ | endif
+
+  " Active, Inactive statusline for netrw window
+  autocmd WinLeave * if count('netrw',&filetype)
+    \ | setlocal statusline=%#subsectionInactive#\ Netrw\ %#middle#
+    \ | endif
+  autocmd WinEnter * if count('netrw',&filetype)
+    \ | setlocal statusline=%#leftSection#\ Netrw\ %#middle#
+    \ | endif
+
+" Active, Inactive statusline for startify window
+  autocmd WinLeave * if count('startify',&filetype)
+    \ | setlocal statusline=%#subsectionInactive#\ Startify\ %#middle#
+    \ | endif
+  autocmd WinEnter * if count('startify',&filetype)
+    \ | setlocal statusline=%#leftSection#\ Startify\ %#middle#
+    \ | endif
+
+  " Change mode section color when enter insert mode
+  " autocmd InsertEnter * highlight leftSection ctermbg=241 ctermfg=254
+  " autocmd InsertLeave * highlight leftSection ctermbg=237 ctermfg=254
+augroup END
+
+" PERSISTENT UNDO
+" Guard for distributions lacking the persistent_undo feature.
+if has('persistent_undo')
+  " define a path to store persistent_undo files.
+  let target_path = expand('~/.config/persisted-undo/')
+
+  " create the directory and any parent directories
+  " if the location does not exist.
+  if !isdirectory(target_path)
+    call system('mkdir -p ' . target_path)
+  endif
+
+  " point Vim to the defined undo directory.
+  let &undodir = target_path
+
+  " finally, enable undo persistence.
+  set undofile
+endif
 
 
 
@@ -163,7 +309,18 @@ let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-css', 'coc-emmet', '
 set shortmess+=c
 
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+function! CocNvimDiagnostic() abort
+	  let info = get(b:, 'coc_diagnostic_info', {})
+	  if empty(info) | return '' | endif
+	  let msgs = []
+	  if get(info, 'error', 0)
+	    call add(msgs, 'E' . info['error'])
+	  endif
+	  if get(info, 'warning', 0)
+	    call add(msgs, 'W' . info['warning'])
+	  endif
+	  return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
+	endfunction
 
 " Use tab for trigger completion with characters ahead and navigate.
 inoremap <silent><expr> <TAB>
@@ -230,8 +387,8 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of language server.
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
+nmap <silent> <M-s> <Plug>(coc-range-select)
+xmap <silent> <M-s> <Plug>(coc-range-select)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -251,25 +408,6 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 
 
 " VIM PLUGINS' CONFIGURATIONS
-
-" PERSISTENT UNDO
-" Guard for distributions lacking the persistent_undo feature.
-if has('persistent_undo')
-  " define a path to store persistent_undo files.
-  let target_path = expand('~/.config/persisted-undo/')
-
-  " create the directory and any parent directories
-  " if the location does not exist.
-  if !isdirectory(target_path)
-    call system('mkdir -p ' . target_path)
-  endif
-
-  " point Vim to the defined undo directory.
-  let &undodir = target_path
-
-  " finally, enable undo persistence.
-  set undofile
-endif
 
 " VIM-STARTIFY
 let g:startify_lists = [
@@ -320,14 +458,31 @@ let g:gutentags_ctags_extra_args = [
   \ '--fields=+ailmnS',
   \ ]
 
-" Vim Airline
-let g:airline_powerline_fonts = 1
-let g:airline_theme='onedark'
-set noshowmode
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
+" VIM-SIGNIFY
+  \ 'colorscheme': 'onedark',
+  \ } VIM-SIGNIFY
+function! s:sy_stats_wrapper()
+      let [added, modified, removed] = sy#repo#get_stats()
+      let symbols = ['+', '~', '-']
+      let stats = [added, modified, removed]  " reorder
+      let statline = ''
+
+      for i in range(3)
+        if stats[i] > 0
+          let statline .= printf('%s%s ', symbols[i], stats[i])
+        endif
+      endfor
+
+      if !empty(statline)
+        let statline = printf('%s', statline[:-2])
+      endif
+
+      return statline
+    endfunction
+
+function! Signify()
+      return s:sy_stats_wrapper()
+    endfunction
 
 " RAINBOW
 let g:rainbow_active = 1
@@ -361,9 +516,16 @@ let g:vimjs#chromeapis = 1
 
 " VIM-HARDTIME
 let g:hardtime_default_on = 1
-let g:list_of_normal_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>"]
-let g:list_of_visual_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
-let g:list_of_insert_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:list_of_normal_keys = ["h", "j", "k", "l", "-", "+"]
+let g:list_of_visual_keys = ["h", "j", "k", "l", "-", "+"]
+let g:list_of_disabled_keys = ["<UP>", "<DOWN>"]
+let g:list_of_insert_keys = ["<LEFT>", "<RIGHT>"]
 let g:hardtime_ignore_quickfix = 1
 let g:hardtime_allow_different_key = 1
+
+" FZF.VIM
+" Remap <Esc> back to default to easily exit fzf window by <Esc>
+autocmd FileType fzf setlocal noruler | tnoremap <Esc> <Esc>
+let g:fzf_nvim_statusline = 0
+
 

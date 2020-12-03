@@ -1,0 +1,7 @@
+set softwrap
+set nowrap
+set linenumbers
+set smooth
+set autoindent
+set casesensitive
+set tabsize 3

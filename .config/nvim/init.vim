@@ -533,3 +533,4 @@ let g:vem_tabline_number_symbol='⏐'
 let g:vem_tabline_right_arrow=''
 let g:vem_tabline_left_arrow=''
 
+

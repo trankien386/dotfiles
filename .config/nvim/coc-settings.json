@@ -1,0 +1,5 @@
+{
+  "tsserver.npm": "/usr/local/bin/npm",
+  "snippets.priority": 100,
+  "emmet.priority": 1
+}

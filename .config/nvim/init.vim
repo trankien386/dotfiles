@@ -148,15 +148,15 @@ map <Right> :bnext<CR>
 map <Left> :bprevious<CR>
 
 " Auto save files when vim losts focus and switching buffers
-function AutoSave()
+function! AutoSave()
     if @% != ""
         " No filename for current buffer
         update
     endif
 endfunction
 
-au FocusLost * call AutoSave()
-au BufLeave * call AutoSave()
+autocmd FocusLost * call AutoSave()
+autocmd BufLeave * call AutoSave()
 
 " No auto cd to files directory
 set noautochdir
@@ -168,11 +168,12 @@ tnoremap <A-k> <C-\><C-N><C-w>k
 tnoremap <A-l> <C-\><C-N><C-w>l
 
 " If open fzf windows inside terminal windows, this will auto remap <Esc>
-autocmd! BufLeave * if count('terminal',&buftype)
+autocmd BufLeave * if count('terminal',&buftype)
   \ | tnoremap <Esc> <C-\><C-n>
   \ | endif
 
 " Status line
+set noshowmode
 let g:currentmode={
 	\ 'n'  : 'NORMAL',
 	\ 'v'  : 'VISUAL',
@@ -275,8 +276,8 @@ augroup statusline
     \ | endif
 
   " Change mode section color when enter insert mode
-  " autocmd InsertEnter * highlight leftSection ctermbg=241 ctermfg=254
-  " autocmd InsertLeave * highlight leftSection ctermbg=237 ctermfg=254
+  autocmd InsertEnter * highlight leftSection ctermbg=241 ctermfg=254
+  autocmd InsertLeave * highlight leftSection ctermbg=237 ctermfg=254
 augroup END
 
 " PERSISTENT UNDO
@@ -302,7 +303,7 @@ endif
 
 "	COC.NVIM CONFIGURATIONS
 
-let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-css', 'coc-emmet', 'coc-tsserver', 'coc-snippets', 'coc-prettier']
+let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-css', 'coc-emmet', 'coc-tsserver', 'coc-snippets', 'coc-prettier', 'coc-tabnine', 'coc-cssmodules']
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c

@@ -193,7 +193,9 @@ alias bs="bullshit-generator"
 alias bullshit='bullshit-generator' 
 
 # No more secrets
-alias ls=' ls -AtUhl | nms -as -f yellow'
+alias ls=' ls -AtUh | nms -as -f yellow'
 
+# bare git repo for dotfiles
 alias dot='/usr/bin/git --git-dir=/Users/Kien/.dotfiles --work-tree=/Users/Kien'
+
 

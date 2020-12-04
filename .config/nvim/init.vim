@@ -25,6 +25,7 @@ Plug 'takac/vim-hardtime'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'pacha/vem-tabline'
+Plug 'voldikss/vim-floaterm'
 
 " Initialize plugin system
 call plug#end()
@@ -63,9 +64,6 @@ set ignorecase smartcase
 
 "Access system clipboard
 set clipboard^=unnamed,unnamedplus
-
-"Paste texts from other windows to terminal VIM correctly
-set pastetoggle=<F2> 
 
 "No line wrap
 set nowrap
@@ -199,7 +197,7 @@ function! ActiveStatusLine()
   setlocal laststatus=2
   setlocal statusline=
   setlocal statusline+=%#leftSection#
-  setlocal statusline+=\ %{g:currentmode[mode()]}
+  setlocal statusline+=\ %{g:currentmode[mode(1)]}
   setlocal statusline+=\ %#subsection#
   setlocal statusline+=\ %{Signify()}
   setlocal statusline+=\ %{FugitiveHead()}
@@ -303,7 +301,7 @@ endif
 
 "	COC.NVIM CONFIGURATIONS
 
-let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-css', 'coc-emmet', 'coc-tsserver', 'coc-snippets', 'coc-prettier', 'coc-tabnine', 'coc-cssmodules']
+let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-css', 'coc-emmet', 'coc-tsserver', 'coc-snippets', 'coc-prettier', 'coc-tabnine', 'coc-cssmodules', 'coc-floaterm']
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -420,8 +418,9 @@ let g:startify_lists = [
 
 "Vim-startify commands
 let g:startify_commands = [
-  \ ['Show netrw', ':Lex'],
-  \ ['Open Fuzzy Finder', ':FZF'],
+  \ ['Netrw', ':Lex'],
+  \ ['Fuzzy Finder', ':FZF'],
+  \ ['Terminal', ':FloatermToggle'],
   \ ]
 
 "Vim-startify bookmarks
@@ -501,7 +500,7 @@ let g:undotree_HighlightChangedText = 1
 let g:undotree_HighlightChangedWithSign = 1
 " Opening Diff panel in neovim will causes errors
 let g:undotree_DiffAutoOpen = 0
-nnoremap <F3> :UndotreeToggle<CR>
+nnoremap <F4> :UndotreeToggle<CR>
 
 " INDENTLINE
 let g:indentLine_char = '⎸'
@@ -533,5 +532,10 @@ let g:vem_tabline_show_number='buffnr'
 let g:vem_tabline_number_symbol='⏐'
 let g:vem_tabline_right_arrow=''
 let g:vem_tabline_left_arrow=''
+
+" VIM-FLOATERM
+let g:floaterm_keymap_toggle = '<F1>'
+let g:floaterm_keymap_next   = '<F2>'
+let g:floaterm_keymap_new    = '<F3>'
 
 

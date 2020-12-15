@@ -26,6 +26,7 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'pacha/vem-tabline'
 Plug 'voldikss/vim-floaterm'
+Plug 'lervag/vimtex'
 
 " Initialize plugin system
 call plug#end()
@@ -142,6 +143,7 @@ set listchars=eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 
 " Switching buffers shortcut
 nnoremap ,b :ls<cr>:b<space>
+nnoremap <F1> :ls<cr>:b<space>
 map <Right> :bnext<CR>
 map <Left> :bprevious<CR>
 
@@ -197,7 +199,7 @@ function! ActiveStatusLine()
   setlocal laststatus=2
   setlocal statusline=
   setlocal statusline+=%#leftSection#
-  setlocal statusline+=\ %{g:currentmode[mode(1)]}
+  setlocal statusline+=\ %{g:currentmode[mode()]}
   setlocal statusline+=\ %#subsection#
   setlocal statusline+=\ %{Signify()}
   setlocal statusline+=\ %{FugitiveHead()}
@@ -301,7 +303,7 @@ endif
 
 "	COC.NVIM CONFIGURATIONS
 
-let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-css', 'coc-emmet', 'coc-tsserver', 'coc-snippets', 'coc-prettier', 'coc-tabnine', 'coc-cssmodules', 'coc-floaterm']
+let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-css', 'coc-emmet', 'coc-tsserver', 'coc-snippets', 'coc-prettier', 'coc-tabnine', 'coc-floaterm', 'coc-vimtex', 'coc-texlab']
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -500,7 +502,7 @@ let g:undotree_HighlightChangedText = 1
 let g:undotree_HighlightChangedWithSign = 1
 " Opening Diff panel in neovim will causes errors
 let g:undotree_DiffAutoOpen = 0
-nnoremap <F4> :UndotreeToggle<CR>
+nnoremap <F5> :UndotreeToggle<CR>
 
 " INDENTLINE
 let g:indentLine_char = '⎸'
@@ -534,8 +536,8 @@ let g:vem_tabline_right_arrow=''
 let g:vem_tabline_left_arrow=''
 
 " VIM-FLOATERM
-let g:floaterm_keymap_toggle = '<F1>'
-let g:floaterm_keymap_next   = '<F2>'
-let g:floaterm_keymap_new    = '<F3>'
+let g:floaterm_keymap_toggle = '<F2>'
+let g:floaterm_keymap_next   = '<F3>'
+let g:floaterm_keymap_new    = '<F4>'
 
 

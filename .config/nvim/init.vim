@@ -502,7 +502,7 @@ let g:undotree_HighlightChangedText = 1
 let g:undotree_HighlightChangedWithSign = 1
 " Opening Diff panel in neovim will causes errors
 let g:undotree_DiffAutoOpen = 0
-nnoremap <F5> :UndotreeToggle<CR>
+nnoremap <F6> :UndotreeToggle<CR>
 
 " INDENTLINE
 let g:indentLine_char = '⎸'
@@ -536,8 +536,22 @@ let g:vem_tabline_right_arrow=''
 let g:vem_tabline_left_arrow=''
 
 " VIM-FLOATERM
-let g:floaterm_keymap_toggle = '<F2>'
-let g:floaterm_keymap_next   = '<F3>'
-let g:floaterm_keymap_new    = '<F4>'
+let g:floaterm_keymap_toggle = '<F3>'
+let g:floaterm_keymap_next   = '<F4>'
+let g:floaterm_keymap_new    = '<F5>'
+
+" VIM-FUGITIVE
+" Toggle Gblame
+function! s:ToggleBlame()
+    if bufwinnr('fugitiveblame') == 1
+      Gblame
+      close
+    else
+      Gblame
+      execute "normal \<C-W>\<C-L>"
+    endif
+endfunction
+
+nnoremap <silent> <F2> :call <SID>ToggleBlame()<CR>
 
 

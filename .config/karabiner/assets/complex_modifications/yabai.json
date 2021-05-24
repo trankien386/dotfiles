@@ -1,0 +1,625 @@
+{
+  "title": "Yabai Manipulation",
+  "rules": [
+    {
+      "description": "Press Fn + h/j/k/l/s to set insertion point in the current window.",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "h",
+            "modifiers": {
+              "mandatory": ["fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --insert west"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "j",
+            "modifiers": {
+              "mandatory": ["fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --insert south"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "k",
+            "modifiers": {
+              "mandatory": ["fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --insert north"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "l",
+            "modifiers": {
+              "mandatory": ["fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --insert east"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "s",
+            "modifiers": {
+              "mandatory": ["fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --insert stack"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press Option + h/j/k/l to focus the current window. Press Caps lock + N/P to cycle between stacked windows",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "h",
+            "modifiers": {
+              "mandatory": ["left_alt"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --focus west"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "j",
+            "modifiers": {
+              "mandatory": ["left_alt"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --focus south"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "k",
+            "modifiers": {
+              "mandatory": ["left_alt"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --focus north"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "l",
+            "modifiers": {
+              "mandatory": ["left_alt"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --focus east"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "n",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --focus stack.next"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "p",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --focus stack.prev"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press Caps lock + h/j/k/l to swap position of the current window and the given window.",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "h",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --swap west"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "j",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --swap south"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "k",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --swap north"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "l",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --swap east"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press Caps lock + Fn + h/j/k/l to re-insert the current window, splitting the given window",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "h",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --warp west"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "j",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --warp south"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "k",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --warp north"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "l",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --warp east"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press Caps lock + Fn + 1-9 to send the current window to the given desktop",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "1",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --space 1"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "2",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --space 2"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "3",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --space 3"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "4",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --space 4"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "5",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --space 5"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "6",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --space 6"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "7",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --space 7"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "8",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --space 8"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "9",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --space 9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press Caps lock + B/F/S to change layout of the current desktop to BSP/Float/Stack layout.",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "b",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m config layout bsp"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "f",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m config layout float"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "s",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m config layout stack"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press Caps lock + X/Y to flip the tree of the current desktop",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "x",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m space --mirror x-axis"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "y",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m space --mirror y-axis"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press Caps lock + R to rotate the tree of the current desktop. Press Caps lock + Fn + R to toggle window split type",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "r",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m space --rotate 90"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "r",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "Fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --toggle split"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press Caps lock + Z to make the current window fullscreen. Press Capslock + Fn + Z to zoom the current window out to its parent node",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "z",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --toggle zoom-fullscreen"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "z",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --toggle zoom-parent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press Caps lock + 0 to make all windows occupy the same area",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "0",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m space --balance"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press Caps lock + Fn + F to make the current window float or unfloat",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "f",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --toggle float"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press Caps lock + G to toggle current space padding and gap between windows",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "g",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m space --toggle padding && /usr/local/bin/yabai -m space --toggle gap"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

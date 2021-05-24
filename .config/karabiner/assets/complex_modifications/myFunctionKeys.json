@@ -1,0 +1,86 @@
+{
+  "title": "My Function keys",
+  "rules": [
+    {
+      "description": "Press F3 to show emoji & symbols",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "f3",
+            "modifiers": {}
+          },
+          "to": [
+            {
+              "key_code": "spacebar",
+              "modifiers": ["left_command", "left_control"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press F4 to ask Siri",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "f4",
+            "modifiers": {}
+          },
+          "to": [
+            {
+              "key_code": "spacebar",
+              "modifiers": ["fn"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Toggle Caps lock by pressing left shift then right shift",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "left_shift",
+            "modifiers": {
+              "mandatory": ["right_shift"],
+              "optional": ["caps_lock"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "caps_lock"
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "left_shift"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "right_shift",
+            "modifiers": {
+              "mandatory": ["left_shift"],
+              "optional": ["caps_lock"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "caps_lock"
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "right_shift"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}

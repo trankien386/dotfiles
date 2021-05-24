@@ -24,7 +24,7 @@ Plug '1995eaton/vim-better-javascript-completion'
 Plug 'takac/vim-hardtime'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'pacha/vem-tabline'
+" Plug 'pacha/vem-tabline'
 Plug 'voldikss/vim-floaterm'
 Plug 'lervag/vimtex'
 
@@ -102,12 +102,20 @@ set lazyredraw
 " Time to trigger CursorHold event in ms
 set updatetime=1000
 
-"Theme
+" Fallback to 256 color mode when true color isn't supported
+if ($TERM_PROGRAM == 'Apple_Terminal')
+  set notermguicolors
+  highlight Pmenu ctermbg=235
+else
+  set termguicolors
+endif
+
+" Theme
 colorscheme onedark
-highlight Normal ctermbg=black
-highlight Pmenu ctermbg=235
-highlight TabLineSel ctermbg=237 ctermfg=252
-highlight TabLine ctermfg=247
+" set background color for terminal emulators don't support true color
+highlight Normal ctermbg=0
+" highlight TabLineSel ctermbg=237 ctermfg=252
+" highlight TabLine ctermfg=247
 
 "Mapping <Leader>] for html to css tags jumping
 nnoremap <leader>] :tag /<c-r>=expand('<cword>')<cr><cr>
@@ -530,10 +538,10 @@ autocmd FileType fzf setlocal noruler | tnoremap <Esc> <Esc>
 let g:fzf_nvim_statusline = 0
 
 " VEM-TABLINE
-let g:vem_tabline_show_number='buffnr'
-let g:vem_tabline_number_symbol='⏐'
-let g:vem_tabline_right_arrow=''
-let g:vem_tabline_left_arrow=''
+" let g:vem_tabline_show_number='buffnr'
+" let g:vem_tabline_number_symbol='⏐'
+" let g:vem_tabline_right_arrow=''
+" let g:vem_tabline_left_arrow=''
 
 " VIM-FLOATERM
 let g:floaterm_keymap_toggle = '<F3>'

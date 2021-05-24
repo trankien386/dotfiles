@@ -1,0 +1,57 @@
+# bsp or float or stack
+yabai -m config layout bsp
+
+# New window spawns to the right if vertical split, or bottom if horizontal split
+yabai -m config window_placement second_child
+
+# Set all padding and gaps to (default: 0)
+yabai -m config top_padding    10
+yabai -m config bottom_padding 10
+yabai -m config left_padding   10
+yabai -m config right_padding  10
+yabai -m config window_gap     10
+
+# Apps shouldn't be managed
+yabai -m rule --add title='Preferences' manage=off
+yabai -m rule --add title="General" manage=off
+yabai -m rule --add title="Info" manage=off
+yabai -m rule --add title='Temperature & Fan Charting' manage=off
+yabai -m rule --add app="System Preferences" manage=off
+yabai -m rule --add app="Activity Monitor" manage=off
+yabai -m rule --add app="Disk Utility" manage=off
+yabai -m rule --add app="Karabiner-Elements" manage=off
+yabai -m rule --add app="Contacts" manage=off
+yabai -m rule --add app="Messages" manage=off
+yabai -m rule --add app="Find My" manage=off
+yabai -m rule --add app="Music" manage=off
+yabai -m rule --add app="Podcasts" manage=off
+yabai -m rule --add app="TV" manage=off
+yabai -m rule --add app="App Store" manage=off
+yabai -m rule --add app="Voice Memos" manage=off
+yabai -m rule --add app="FaceTime" manage=off
+yabai -m rule --add app="Photos" manage=off
+yabai -m rule --add app="Stocks" manage=off
+yabai -m rule --add app="Books" manage=off
+yabai -m rule --add app="Calculator" manage=off
+yabai -m rule --add app="Authy Desktop" manage=off
+yabai -m rule --add app="Windscribe" manage=off
+yabai -m rule --add app="The Unarchiver" manage=off
+yabai -m rule --add app="coconutBattery" manage=off
+yabai -m rule --add app="TunnelBear" manage=off
+yabai -m rule --add app="AdGuard for Safari" manage=off
+yabai -m rule --add app="Zalo" manage=off
+yabai -m rule --add app="MineX" manage=off
+yabai -m rule --add app="Sudoku" manage=off
+yabai -m rule --add app="Microsoft Teams" manage=off
+yabai -m rule --add app="Archive Utility" manage=off
+yabai -m rule --add app="Digital Color Meter" manage=off
+
+# Focus the most recent window after a window/application is closed
+yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus recent"
+yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus recent"
+
+# restore position of floating windows when they are manually unfloated
+~/.config/yabai/yabai_restore.sh
+
+# 
+echo "yabai configuration loaded."

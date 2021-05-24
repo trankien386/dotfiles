@@ -103,6 +103,8 @@ setopt APPEND_HISTORY
 setopt INC_APPEND_HISTORY
 # expire duplicates first
 setopt HIST_EXPIRE_DUPS_FIRST 
+# do not store commands started with a space character
+setopt HIST_IGNORE_SPACE
 # do not store duplications
 setopt HIST_IGNORE_DUPS
 #ignore duplicates when searching
@@ -197,5 +199,8 @@ alias ls=' ls -AtUh | nms -as -f yellow'
 
 # bare git repo for dotfiles
 alias dot='/usr/bin/git --git-dir=/Users/Kien/.dotfiles --work-tree=/Users/Kien'
+
+# Alias for Qalculate
+alias qc='qalculate-gtk'
 
 

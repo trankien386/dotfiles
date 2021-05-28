@@ -114,19 +114,24 @@ endif
 "" THEME
 " colorscheme onedark
 " set background color for terminal emulators don't support true color
-highlight Normal ctermbg=0
+" highlight Normal ctermbg=0
 " tab colors
 " highlight TabLineSel ctermbg=237 ctermfg=252
 " highlight TabLine ctermfg=247
 "Change theme depending on the time of day
 let hr = (strftime('%H'))
-if hr >= 21
+if ($TERM_PROGRAM == 'Apple_Terminal')
   colorscheme onedark
+  highlight Normal ctermbg=0
+elseif hr >= 19
+  colorscheme onedark
+  highlight Normal ctermbg=0
 elseif hr >= 5
   colorscheme one
   set background=light
 elseif hr >= 0
   colorscheme onedark
+  highlight Normal ctermbg=0
 endif
 
 "Mapping <Leader>] for html to css tags jumping

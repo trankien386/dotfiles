@@ -27,6 +27,7 @@ Plug 'junegunn/fzf.vim'
 " Plug 'pacha/vem-tabline'
 Plug 'voldikss/vim-floaterm'
 Plug 'lervag/vimtex'
+Plug 'rakr/vim-one'
 
 " Initialize plugin system
 call plug#end()
@@ -110,12 +111,23 @@ else
   set termguicolors
 endif
 
-" Theme
-colorscheme onedark
+"" THEME
+" colorscheme onedark
 " set background color for terminal emulators don't support true color
 highlight Normal ctermbg=0
+" tab colors
 " highlight TabLineSel ctermbg=237 ctermfg=252
 " highlight TabLine ctermfg=247
+"Change theme depending on the time of day
+let hr = (strftime('%H'))
+if hr >= 21
+  colorscheme onedark
+elseif hr >= 5
+  colorscheme one
+  set background=light
+elseif hr >= 0
+  colorscheme onedark
+endif
 
 "Mapping <Leader>] for html to css tags jumping
 nnoremap <leader>] :tag /<c-r>=expand('<cword>')<cr><cr>
@@ -181,38 +193,38 @@ autocmd BufLeave * if count('terminal',&buftype)
   \ | endif
 
 " Status line
-set noshowmode
-let g:currentmode={
-	\ 'n'  : 'NORMAL',
-	\ 'v'  : 'VISUAL',
-	\ 'V'  : 'V·LINE',
-	\ '' : 'V·BLOCK',
-	\ 's'  : 'SELECT',
-	\ 'S'  : 'S·LINE',
-	\ '' : 'S·BLOCK',
-	\ 'i'  : 'INSERT',
-	\ 'R'  : 'REPLACE',
-	\ 'c'  : 'COMMAND',
-	\}
+" set noshowmode
+" let g:currentmode={
+" 	\ 'n'  : 'NORMAL',
+" 	\ 'v'  : 'VISUAL',
+" 	\ 'V'  : 'V·LINE',
+" 	\ '' : 'V·BLOCK',
+" 	\ 's'  : 'SELECT',
+" 	\ 'S'  : 'S·LINE',
+" 	\ '' : 'S·BLOCK',
+" 	\ 'i'  : 'INSERT',
+" 	\ 'R'  : 'REPLACE',
+" 	\ 'c'  : 'COMMAND',
+" 	\}
 
-highlight leftSection ctermbg=237 ctermfg=254
-highlight rightSection ctermbg=237 ctermfg=252 cterm=NONE
-highlight subsection ctermbg=236 ctermfg=247
-highlight subsectionInactive ctermbg=236 ctermfg=242
+" highlight leftSection ctermbg=NONE
+highlight rightSection ctermbg=NONE
+highlight subsection ctermbg=NONE
+" highlight subsectionInactive ctermbg=236
 highlight middle ctermbg=NONE
-highlight middleInactive ctermbg=NONE ctermfg=242
+" highlight middleInactive ctermbg=NONE
 
 function! ActiveStatusLine()
   highlight leftSection cterm=bold
   setlocal laststatus=2
   setlocal statusline=
   setlocal statusline+=%#leftSection#
-  setlocal statusline+=\ %{g:currentmode[mode()]}
-  setlocal statusline+=\ %#subsection#
+  " setlocal statusline+=\ %{g:currentmode[mode()]}
+  " setlocal statusline+=\ %#subsection#
   setlocal statusline+=\ %{Signify()}
   setlocal statusline+=\ %{FugitiveHead()}
   setlocal statusline+=\ %#middle#
-  setlocal statusline+=\ %f
+  setlocal statusline+=\ %F
   setlocal statusline+=\ %m
   setlocal statusline+=\ %h
   setlocal statusline+=\ %w
@@ -221,18 +233,18 @@ function! ActiveStatusLine()
   setlocal statusline+=%=
   setlocal statusline+=%{gutentags#statusline()}
   setlocal statusline+=\ %#rightSection#
-  setlocal statusline+=\ %p%%
-  setlocal statusline+=\ ☰
-  setlocal statusline+=\ %l/%L\ 
-  setlocal statusline+=\:\ %c\ 
+  " setlocal statusline+=\ %p%%
+  " setlocal statusline+=\ ☰
+  setlocal statusline+=\ %l
+  setlocal statusline+=:\%c\ 
 endfunction
 
 function! InactiveStatusLine()
   setlocal laststatus=2
   setlocal statusline=
-  setlocal statusline+=%#subsectionInactive#
-  setlocal statusline+=\ %{Signify()}
-  setlocal statusline+=\ %{FugitiveHead()}
+  " setlocal statusline+=%#subsectionInactive#
+  " setlocal statusline+=\ %{Signify()}
+  " setlocal statusline+=\ %{FugitiveHead()}
   setlocal statusline+=\ %#middleInactive#
   setlocal statusline+=%<
   setlocal statusline+=\ %F
@@ -242,11 +254,10 @@ endfunction
 function! TerminalStatusLine()
   setlocal laststatus=2
   setlocal statusline=
-  setlocal statusline+=%#leftSection#
-  setlocal statusline+=\ %{toupper(mode())}
-  setlocal statusline+=\ %#subsection#
+  " setlocal statusline+=%#leftSection#
+  " setlocal statusline+=\ %{toupper(mode())}
+  " setlocal statusline+=\ %#subsection#
   setlocal statusline+=\ %{strpart(expand('%f'),16,23)}
-  setlocal statusline+=\ %#middle#
   tnoremap <Esc> <C-\><C-n>
 endfunction
 
@@ -284,8 +295,8 @@ augroup statusline
     \ | endif
 
   " Change mode section color when enter insert mode
-  autocmd InsertEnter * highlight leftSection ctermbg=241 ctermfg=254
-  autocmd InsertLeave * highlight leftSection ctermbg=237 ctermfg=254
+  " autocmd InsertEnter * highlight leftSection ctermbg=241 ctermfg=254
+  " autocmd InsertLeave * highlight leftSection ctermbg=237 ctermfg=254
 augroup END
 
 " PERSISTENT UNDO

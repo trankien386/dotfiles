@@ -112,25 +112,27 @@ else
 endif
 
 "" THEME
-" colorscheme onedark
-" set background color for terminal emulators don't support true color
-" highlight Normal ctermbg=0
+
 " tab colors
 " highlight TabLineSel ctermbg=237 ctermfg=252
 " highlight TabLine ctermfg=247
+
 "Change theme depending on the time of day
 let hr = (strftime('%H'))
 if ($TERM_PROGRAM == 'Apple_Terminal')
   colorscheme onedark
+" set background color for terminal emulators don't support true color
   highlight Normal ctermbg=0
 elseif hr >= 19
   colorscheme onedark
+" set background color for terminal emulators don't support true color
   highlight Normal ctermbg=0
 elseif hr >= 5
   colorscheme one
   set background=light
 elseif hr >= 0
   colorscheme onedark
+" set background color for terminal emulators don't support true color
   highlight Normal ctermbg=0
 endif
 
@@ -198,34 +200,16 @@ autocmd BufLeave * if count('terminal',&buftype)
   \ | endif
 
 " Status line
-" set noshowmode
-" let g:currentmode={
-" 	\ 'n'  : 'NORMAL',
-" 	\ 'v'  : 'VISUAL',
-" 	\ 'V'  : 'V·LINE',
-" 	\ '' : 'V·BLOCK',
-" 	\ 's'  : 'SELECT',
-" 	\ 'S'  : 'S·LINE',
-" 	\ '' : 'S·BLOCK',
-" 	\ 'i'  : 'INSERT',
-" 	\ 'R'  : 'REPLACE',
-" 	\ 'c'  : 'COMMAND',
-" 	\}
 
-" highlight leftSection ctermbg=NONE
 highlight rightSection ctermbg=NONE
-highlight subsection ctermbg=NONE
-" highlight subsectionInactive ctermbg=236
 highlight middle ctermbg=NONE
-" highlight middleInactive ctermbg=NONE
+highlight middleInactive ctermbg=NONE guifg=darkgrey
 
 function! ActiveStatusLine()
   highlight leftSection cterm=bold
   setlocal laststatus=2
   setlocal statusline=
   setlocal statusline+=%#leftSection#
-  " setlocal statusline+=\ %{g:currentmode[mode()]}
-  " setlocal statusline+=\ %#subsection#
   setlocal statusline+=\ %{Signify()}
   setlocal statusline+=\ %{FugitiveHead()}
   setlocal statusline+=\ %#middle#
@@ -238,8 +222,6 @@ function! ActiveStatusLine()
   setlocal statusline+=%=
   setlocal statusline+=%{gutentags#statusline()}
   setlocal statusline+=\ %#rightSection#
-  " setlocal statusline+=\ %p%%
-  " setlocal statusline+=\ ☰
   setlocal statusline+=\ %l
   setlocal statusline+=:\%c\ 
 endfunction
@@ -247,21 +229,15 @@ endfunction
 function! InactiveStatusLine()
   setlocal laststatus=2
   setlocal statusline=
-  " setlocal statusline+=%#subsectionInactive#
-  " setlocal statusline+=\ %{Signify()}
-  " setlocal statusline+=\ %{FugitiveHead()}
   setlocal statusline+=\ %#middleInactive#
   setlocal statusline+=%<
-  setlocal statusline+=\ %F
+  setlocal statusline+=\ %f
   setlocal statusline+=\ %m
 endfunction
 
 function! TerminalStatusLine()
   setlocal laststatus=2
   setlocal statusline=
-  " setlocal statusline+=%#leftSection#
-  " setlocal statusline+=\ %{toupper(mode())}
-  " setlocal statusline+=\ %#subsection#
   setlocal statusline+=\ %{strpart(expand('%f'),16,23)}
   tnoremap <Esc> <C-\><C-n>
 endfunction
@@ -299,9 +275,6 @@ augroup statusline
     \ | setlocal statusline=%#leftSection#\ Startify\ %#middle#
     \ | endif
 
-  " Change mode section color when enter insert mode
-  " autocmd InsertEnter * highlight leftSection ctermbg=241 ctermfg=254
-  " autocmd InsertLeave * highlight leftSection ctermbg=237 ctermfg=254
 augroup END
 
 " PERSISTENT UNDO

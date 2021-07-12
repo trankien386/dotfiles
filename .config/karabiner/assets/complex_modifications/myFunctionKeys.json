@@ -81,6 +81,25 @@
           "type": "basic"
         }
       ]
+    },
+    {
+      "description": "Press Control + c",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "c",
+            "modifiers": {
+              "mandatory": ["control"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "osascript ~/Library/Scripts/controlcenter.scpt"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

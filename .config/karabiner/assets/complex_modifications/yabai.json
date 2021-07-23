@@ -2,14 +2,14 @@
   "title": "Yabai Manipulation",
   "rules": [
     {
-      "description": "Press Fn + h/j/k/l/s to set insertion point in the current window.",
+      "description": "Press Option + h/j/k/l/s to set insertion point in the current window.",
       "manipulators": [
         {
           "type": "basic",
           "from": {
             "key_code": "h",
             "modifiers": {
-              "mandatory": ["fn"]
+              "mandatory": ["left_alt"]
             }
           },
           "to": [
@@ -23,7 +23,7 @@
           "from": {
             "key_code": "j",
             "modifiers": {
-              "mandatory": ["fn"]
+              "mandatory": ["left_alt"]
             }
           },
           "to": [
@@ -37,7 +37,7 @@
           "from": {
             "key_code": "k",
             "modifiers": {
-              "mandatory": ["fn"]
+              "mandatory": ["left_alt"]
             }
           },
           "to": [
@@ -51,12 +51,73 @@
           "from": {
             "key_code": "l",
             "modifiers": {
-              "mandatory": ["fn"]
+              "mandatory": ["left_alt"]
             }
           },
           "to": [
             {
               "shell_command": "/usr/local/bin/yabai -m window --insert east"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press Fn + h/j/k/l to focus the current window. Press Fn + s to stack the current window with the recent window.",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "h",
+            "modifiers": {
+              "mandatory": ["fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --focus west"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "j",
+            "modifiers": {
+              "mandatory": ["fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --focus south"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "k",
+            "modifiers": {
+              "mandatory": ["fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --focus north"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "l",
+            "modifiers": {
+              "mandatory": ["fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --focus east"
             }
           ]
         },
@@ -77,64 +138,8 @@
       ]
     },
     {
-      "description": "Press Option + h/j/k/l to focus the current window. Press Caps lock + N/P to cycle between stacked windows",
+      "description": "Press Caps lock + N/P to cycle between stacked windows.",
       "manipulators": [
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "h",
-            "modifiers": {
-              "mandatory": ["left_alt"]
-            }
-          },
-          "to": [
-            {
-              "shell_command": "/usr/local/bin/yabai -m window --focus west"
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "j",
-            "modifiers": {
-              "mandatory": ["left_alt"]
-            }
-          },
-          "to": [
-            {
-              "shell_command": "/usr/local/bin/yabai -m window --focus south"
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "k",
-            "modifiers": {
-              "mandatory": ["left_alt"]
-            }
-          },
-          "to": [
-            {
-              "shell_command": "/usr/local/bin/yabai -m window --focus north"
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "l",
-            "modifiers": {
-              "mandatory": ["left_alt"]
-            }
-          },
-          "to": [
-            {
-              "shell_command": "/usr/local/bin/yabai -m window --focus east"
-            }
-          ]
-        },
         {
           "type": "basic",
           "from": {

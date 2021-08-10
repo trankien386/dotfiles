@@ -4,7 +4,7 @@ stackline:init()
 hs.loadSpoon("ReloadConfiguration")
 spoon.ReloadConfiguration:start()
 
-hs.hotkey.bind({"ctrl"}, "x", function()
+hs.hotkey.bind({""}, "f3", function()
   hs.osascript.applescript([[
     tell application "System Events"
       tell process "Control Center"

@@ -5,10 +5,28 @@ yabai -m config layout bsp
 yabai -m config window_placement second_child
 
 # Set all padding and gaps to (default: 0)
-yabai -m config top_padding    10
+# yabai -m config top_padding    127
+# yabai -m config bottom_padding 10
+# yabai -m config left_padding   103
+# yabai -m config right_padding  103
+# yabai -m config window_gap     10
+
+# yabai -m config top_padding    143
+# yabai -m config bottom_padding 10
+# yabai -m config left_padding   117
+# yabai -m config right_padding  117
+# yabai -m config window_gap     10
+
+# yabai -m config top_padding    10
+# yabai -m config bottom_padding 10
+# yabai -m config left_padding   10
+# yabai -m config right_padding  10
+# yabai -m config window_gap     10
+
+yabai -m config top_padding    277
 yabai -m config bottom_padding 10
-yabai -m config left_padding   10
-yabai -m config right_padding  10
+yabai -m config left_padding   224
+yabai -m config right_padding  224
 yabai -m config window_gap     10
 
 # Apps shouldn't be managed
@@ -52,7 +70,6 @@ yabai -m rule --add app="coconutBattery" manage=off
 yabai -m rule --add app="TunnelBear" manage=off
 yabai -m rule --add app="AdGuard for Safari" manage=off
 yabai -m rule --add app="Zalo" manage=off
-yabai -m rule --add app="MineX" manage=off
 yabai -m rule --add app="Sudoku" manage=off
 yabai -m rule --add app="Archive Utility" manage=off
 yabai -m rule --add app="Digital Color Meter" manage=off
@@ -60,6 +77,8 @@ yabai -m rule --add app="System Information" manage=off
 yabai -m rule --add app="Transmission" manage=off
 yabai -m rule --add app="AppCleaner" manage=off
 yabai -m rule --add app="Installer" manage=off
+yabai -m rule --add app="QuickTime Player" manage=off
+yabai -m rule --add app="Boot Camp Assistant" manage=off
 
 # Focus the most recent window after a window/application is closed
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus recent"

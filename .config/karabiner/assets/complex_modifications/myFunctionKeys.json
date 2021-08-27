@@ -2,24 +2,6 @@
   "title": "My Function keys",
   "rules": [
     {
-      "description": "Press F4 to ask Siri",
-      "manipulators": [
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "f4",
-            "modifiers": {}
-          },
-          "to": [
-            {
-              "key_code": "spacebar",
-              "modifiers": ["fn"]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "description": "Toggle Caps lock by pressing left shift then right shift",
       "manipulators": [
         {

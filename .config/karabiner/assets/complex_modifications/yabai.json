@@ -2,14 +2,14 @@
   "title": "Yabai Manipulation",
   "rules": [
     {
-      "description": "Press Option + h/j/k/l/s to set insertion point in the current window.",
+      "description": "Press Control + h/j/k/l/s to set insertion point in the current window.",
       "manipulators": [
         {
           "type": "basic",
           "from": {
             "key_code": "h",
             "modifiers": {
-              "mandatory": ["left_alt"]
+              "mandatory": ["left_control"]
             }
           },
           "to": [
@@ -23,7 +23,7 @@
           "from": {
             "key_code": "j",
             "modifiers": {
-              "mandatory": ["left_alt"]
+              "mandatory": ["left_control"]
             }
           },
           "to": [
@@ -37,7 +37,7 @@
           "from": {
             "key_code": "k",
             "modifiers": {
-              "mandatory": ["left_alt"]
+              "mandatory": ["left_control"]
             }
           },
           "to": [
@@ -51,12 +51,26 @@
           "from": {
             "key_code": "l",
             "modifiers": {
-              "mandatory": ["left_alt"]
+              "mandatory": ["left_control"]
             }
           },
           "to": [
             {
               "shell_command": "/usr/local/bin/yabai -m window --insert east"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "s",
+            "modifiers": {
+              "mandatory": ["left_control"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --insert stack"
             }
           ]
         }
@@ -150,7 +164,7 @@
           },
           "to": [
             {
-              "shell_command": "/usr/local/bin/yabai -m window --focus stack.next"
+              "shell_command": "/usr/local/bin/yabai -m window --focus stack.next || /usr/local/bin/yabai -m window --focus stack.first"
             }
           ]
         },
@@ -164,7 +178,7 @@
           },
           "to": [
             {
-              "shell_command": "/usr/local/bin/yabai -m window --focus stack.prev"
+              "shell_command": "/usr/local/bin/yabai -m window --focus stack.prev || /usr/local/bin/yabai -m window --focus stack.last"
             }
           ]
         }
@@ -504,7 +518,7 @@
       ]
     },
     {
-      "description": "Press Caps lock + R to rotate the tree of the current desktop. Press Caps lock + Fn + R to toggle window split type",
+      "description": "Press Caps lock + R to rotate the tree of the current desktop.",
       "manipulators": [
         {
           "type": "basic",
@@ -517,20 +531,6 @@
           "to": [
             {
               "shell_command": "/usr/local/bin/yabai -m space --rotate 90"
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "r",
-            "modifiers": {
-              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "Fn"]
-            }
-          },
-          "to": [
-            {
-              "shell_command": "/usr/local/bin/yabai -m window --toggle split"
             }
           ]
         }

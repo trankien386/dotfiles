@@ -15,7 +15,7 @@ c.appearance.color                    = { white = 0.90 }    -- Indicator backgro
 c.appearance.alpha                    = 1                   -- Opacity of active indicators
 c.appearance.dimmer                   = 2.5                 -- Higher numbers increase contrast b/n focused & unfocused state
 c.appearance.iconDimmer               = 1.1                 -- Higher numbers dim inactive icons *less* than the non-icon indicators
-c.appearance.showIcons                = false                -- Window indicator style ('lozenge'-shaped when false)
+c.appearance.showIcons                = false               -- Window indicator style ('lozenge'-shaped when false)
 c.appearance.size                     = 32                  -- Size of window indicators (height when icons off)
 c.appearance.radius                   = 2                   -- Indicator roundness. Higher numbers → *less* roundness… I'm sorry
 c.appearance.iconPadding              = 3                   -- Space between icon & indicator edge. Higher numbers → smaller, more inset icons
@@ -24,8 +24,8 @@ c.appearance.pillThinness             = 7                   -- Aspect ratio of p
 c.appearance.vertSpacing              = 1.2                 -- Amount of vertical space between indicators
 
 c.appearance.offset                   = {}                  -- Offset controls position of stack indicators relative to the window
-c.appearance.offset.y                 = 150                   -- Distance from top of the window to render indicators
-c.appearance.offset.x                 = 2.7                   -- Distance away from the edge of the window to render indicators
+c.appearance.offset.y                 = 10                  -- Distance from top of the window to render indicators
+c.appearance.offset.x                 = 2.7                 -- Distance away from the edge of the window to render indicators
 
 c.appearance.shouldFade               = true                -- Enable/disable fade animations
 c.appearance.fadeDuration             = 0.2                 -- Duration of fade animations (seconds) 

@@ -30,7 +30,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 #Install powerlevel10k
-source /usr/local/share/powerlevel10k/powerlevel10k.zsh-theme
+source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme
 
 # Correctly display UTF-8 with combining characters.
 if [[ "$(locale LC_CTYPE)" == "UTF-8" ]]; then
@@ -116,7 +116,7 @@ setopt HIST_REDUCE_BLANKS
 setopt AUTO_CD
 
 #Fast Syntax highlighting
-source /usr/local/share/fsh/fast-syntax-highlighting.plugin.zsh
+source ~/.local/share/fsh/fast-syntax-highlighting.plugin.zsh
 
 #Fzf
 [ -f /usr/local/share/fzf/.fzf.zsh ] && source /usr/local/share/fzf/.fzf.zsh
@@ -183,10 +183,6 @@ autoload -Uz zmv
 # Set path for ripgrep config file
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
-# Replace Vim with neovim
-alias vi="nvim"
-alias vim="nvim"
-
 # zsh smart tab completion 
 zstyle ':completion:*' matcher-list '' '+m:{a-zA-Z}={A-Za-z}' '+r:|[._-]=* r:|=*' '+l:|=* r:|=*'
 
@@ -199,8 +195,4 @@ alias ls=' ls -AtUh | nms -as -f yellow'
 
 # bare git repo for dotfiles
 alias dot='/usr/bin/git --git-dir=/Users/Kien/.dotfiles --work-tree=/Users/Kien'
-
-# Alias for Qalculate
-alias qc='qalculate-gtk'
-
 

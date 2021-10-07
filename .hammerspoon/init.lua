@@ -1,8 +1,9 @@
 stackline = require "stackline"
 stackline:init()
 
-hs.loadSpoon("ReloadConfiguration")
-spoon.ReloadConfiguration:start()
+-- Require 'ReloadConfiguration' Spoon
+-- hs.loadSpoon("ReloadConfiguration")
+-- spoon.ReloadConfiguration:start()
 
 -- MacOS Big Sur or later
 -- hs.hotkey.bind({"cmd","ctrl","shift","alt"}, "c", function()

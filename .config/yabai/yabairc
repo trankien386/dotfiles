@@ -8,18 +8,6 @@ yabai -m config left_padding   10
 yabai -m config right_padding  10
 yabai -m config window_gap     10
 
-# yabai -m config top_padding    143
-# yabai -m config bottom_padding 10
-# yabai -m config left_padding   117
-# yabai -m config right_padding  117
-# yabai -m config window_gap     10
-
-# yabai -m config top_padding    277
-# yabai -m config bottom_padding 10
-# yabai -m config left_padding   224
-# yabai -m config right_padding  224
-# yabai -m config window_gap     10
-
 # Apps shouldn't be managed
 yabai -m rule --add title='Preferences' manage=off
 yabai -m rule --add title="General" manage=off
@@ -43,22 +31,13 @@ yabai -m rule --add app="Disk Utility" manage=off
 yabai -m rule --add app="Karabiner-Elements" manage=off
 yabai -m rule --add app="Contacts" manage=off
 yabai -m rule --add app="Messages" manage=off
-yabai -m rule --add app="Find My" manage=off
-yabai -m rule --add app="Music" manage=off
-yabai -m rule --add app="Podcasts" manage=off
-yabai -m rule --add app="TV" manage=off
 yabai -m rule --add app="App Store" manage=off
-yabai -m rule --add app="Voice Memos" manage=off
 yabai -m rule --add app="FaceTime" manage=off
-yabai -m rule --add app="Photos" manage=off
-yabai -m rule --add app="Stocks" manage=off
 yabai -m rule --add app="Books" manage=off
 yabai -m rule --add app="Calculator" manage=off
 yabai -m rule --add app="Authy Desktop" manage=off
-yabai -m rule --add app="Windscribe" manage=off
 yabai -m rule --add app="The Unarchiver" manage=off
 yabai -m rule --add app="coconutBattery" manage=off
-yabai -m rule --add app="TunnelBear" manage=off
 yabai -m rule --add app="AdGuard for Safari" manage=off
 yabai -m rule --add app="Zalo" manage=off
 yabai -m rule --add app="Sudoku" manage=off
@@ -70,7 +49,6 @@ yabai -m rule --add app="AppCleaner" manage=off
 yabai -m rule --add app="Installer" manage=off
 yabai -m rule --add app="QuickTime Player" manage=off
 yabai -m rule --add app="Boot Camp Assistant" manage=off
-yabai -m rule --add app="Stickies" manage=off
 
 # Focus the most recent window after a window/application is closed
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus recent"
@@ -87,5 +65,16 @@ yabai -m config mouse_modifier shift
 
 # Hold Mouse's modifier key with left click to resize window
 yabai -m config mouse_action1 resize
+
+# Make all windows always occupy the same space
+yabai -m config auto_balance on
+
+# floating windows are always on top (default: off)
+yabai -m config window_topmost on
+
+# Windows' borders
+yabai -m config window_border off
+yabai -m config active_window_border_color 0xffDE3A43
+yabai -m config normal_window_border_color 0xff
 
 echo "yabai configuration loaded."

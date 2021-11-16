@@ -196,3 +196,5 @@ alias ls=' ls -AtUh | nms -as -f yellow'
 # bare git repo for dotfiles
 alias dot='/usr/bin/git --git-dir=/Users/Kien/.dotfiles --work-tree=/Users/Kien'
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

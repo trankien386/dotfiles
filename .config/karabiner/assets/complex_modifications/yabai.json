@@ -2,70 +2,14 @@
   "title": "Yabai Manipulation",
   "rules": [
     {
-      "description": "Press Control + h/j/k/l/s to set insertion point in the current window.",
+      "description": "Press Caps lock + i to set insertion point in the current window.",
       "manipulators": [
         {
           "type": "basic",
           "from": {
-            "key_code": "h",
+            "key_code": "i",
             "modifiers": {
-              "mandatory": ["left_control"]
-            }
-          },
-          "to": [
-            {
-              "shell_command": "/usr/local/bin/yabai -m window --insert west"
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "j",
-            "modifiers": {
-              "mandatory": ["left_control"]
-            }
-          },
-          "to": [
-            {
-              "shell_command": "/usr/local/bin/yabai -m window --insert south"
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "k",
-            "modifiers": {
-              "mandatory": ["left_control"]
-            }
-          },
-          "to": [
-            {
-              "shell_command": "/usr/local/bin/yabai -m window --insert north"
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "l",
-            "modifiers": {
-              "mandatory": ["left_control"]
-            }
-          },
-          "to": [
-            {
-              "shell_command": "/usr/local/bin/yabai -m window --insert east"
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "s",
-            "modifiers": {
-              "mandatory": ["left_control"]
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
             }
           },
           "to": [
@@ -77,7 +21,26 @@
       ]
     },
     {
-      "description": "Press Fn + h/j/k/l to focus the current window. Press Fn + s to stack the current window with the recent window.",
+      "description": "Press Control + s to stack the current window with the recent window.",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "s",
+            "modifiers": {
+              "mandatory": ["left_control"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --stack recent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press Fn + h/j/k/l to focus the current window.",
       "manipulators": [
         {
           "type": "basic",
@@ -134,25 +97,11 @@
               "shell_command": "/usr/local/bin/yabai -m window --focus east"
             }
           ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "s",
-            "modifiers": {
-              "mandatory": ["fn"]
-            }
-          },
-          "to": [
-            {
-              "shell_command": "/usr/local/bin/yabai -m window --stack recent"
-            }
-          ]
         }
       ]
     },
     {
-      "description": "Press Caps lock + N/P to cycle between stacked windows.",
+      "description": "Press Caps lock + N to cycle between stacked windows.",
       "manipulators": [
         {
           "type": "basic",
@@ -165,20 +114,6 @@
           "to": [
             {
               "shell_command": "/usr/local/bin/yabai -m window --focus stack.next || /usr/local/bin/yabai -m window --focus stack.first"
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "p",
-            "modifiers": {
-              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
-            }
-          },
-          "to": [
-            {
-              "shell_command": "/usr/local/bin/yabai -m window --focus stack.prev || /usr/local/bin/yabai -m window --focus stack.last"
             }
           ]
         }
@@ -602,6 +537,25 @@
           "to": [
             {
               "shell_command": "/usr/local/bin/yabai -m window --toggle float"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Press Caps lock + Fn + S to make the current window sticky",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "s",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --toggle sticky"
             }
           ]
         }

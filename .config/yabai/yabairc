@@ -49,6 +49,7 @@ yabai -m rule --add app="AppCleaner" manage=off
 yabai -m rule --add app="Installer" manage=off
 yabai -m rule --add app="QuickTime Player" manage=off
 yabai -m rule --add app="Boot Camp Assistant" manage=off
+yabai -m rule --add app="DaisyDisk" manage=off
 
 # Focus the most recent window after a window/application is closed
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus recent"
@@ -70,7 +71,7 @@ yabai -m config mouse_action1 resize
 yabai -m config auto_balance on
 
 # floating windows are always on top (default: off)
-yabai -m config window_topmost on
+yabai -m config window_topmost off
 
 # Windows' borders
 yabai -m config window_border off

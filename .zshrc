@@ -1,13 +1,3 @@
-#Get confirmation when making rm command
-alias -g rm="rm -i"
-
-# Basic auto/tab complete:
-autoload -Uz compinit
-zstyle ':completion:*' menu select
-zmodload zsh/complist
-compinit
-_comp_options+=(globdots)		# Include hidden files.
-
 # Cache completion if nothing changed - faster startup time
 typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
 if [ $(date +'%j') != $updated_at ]; then
@@ -15,9 +5,6 @@ if [ $(date +'%j') != $updated_at ]; then
 else
   compinit -C -i
 fi
-
-# Enhanced form of menu completion called `menu selection'
-zmodload -i zsh/complist
 
 # Prompt at bottom of screen - must be loaded before p10k instant prompt
 printf '\n%.0s' {1..100}
@@ -31,6 +18,22 @@ fi
 
 #Install powerlevel10k
 source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+#Get confirmation when making rm command
+alias -g rm="rm -i"
+
+# Basic auto/tab complete:
+autoload -Uz compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)		# Include hidden files.
+
+# Enhanced form of menu completion called `menu selection'
+zmodload -i zsh/complist
 
 # Correctly display UTF-8 with combining characters.
 if [[ "$(locale LC_CTYPE)" == "UTF-8" ]]; then
@@ -112,46 +115,19 @@ setopt HIST_FIND_NO_DUPS
 # removes blank lines from history
 setopt HIST_REDUCE_BLANKS
 
-#Auto CD
+# Auto CD
 setopt AUTO_CD
 
-#Fast Syntax highlighting
+# Fast Syntax highlighting
 source ~/.local/share/fsh/fast-syntax-highlighting.plugin.zsh
 
-#Fzf
-[ -f /usr/local/share/fzf/.fzf.zsh ] && source /usr/local/share/fzf/.fzf.zsh
-
-#Fzf Options
-export FZF_DEFAULT_OPTS="
-	--height 80%
-	
-	--border
-	--preview-window=:hidden
-	--preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'
-	--bind '?:toggle-preview'
-	--multi
-	--info=inline
-	--prompt='⌁ '
-	--marker='✗'
-	--pointer='➜'	
-"
-
-# Setting fd as the default source for fzf
-export FZF_DEFAULT_COMMAND='fd --type f --hidden -E 'Library/''
-
-# To apply the command to CTRL-T and ALT-C as well
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd --type d --hidden -E 'Library/'"
+# Source FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
   fd --type d --hidden --exclude ".git" . "$1" 'Library/'
 }
-
-# FZF colorscheme
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
-	--color pointer:76,prompt:39,info:215,spinner:203,marker:203
-'
 
 #Bat for man page
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
@@ -174,9 +150,6 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 #Load zmv - better files moving command
 autoload -Uz zmv
 
@@ -196,5 +169,3 @@ alias ls=' ls -AtUh | nms -as -f yellow'
 # bare git repo for dotfiles
 alias dot='/usr/bin/git --git-dir=/Users/Kien/.dotfiles --work-tree=/Users/Kien'
 
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

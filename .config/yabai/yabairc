@@ -67,10 +67,10 @@ yabai -m signal --add event=application_terminated action="yabai -m query --wind
 ~/.config/yabai/yabai_restore.sh
 
 # Space's split ratio
-yabai -m config split_ratio 0.6
+yabai -m config split_ratio 0.7
 
 # Mouse's modifier key for mouse actions
-yabai -m config mouse_modifier shift
+yabai -m config mouse_modifier fn
 
 # Hold Mouse's modifier key with left click to resize window
 yabai -m config mouse_action1 resize
@@ -79,7 +79,7 @@ yabai -m config mouse_action1 resize
 yabai -m config auto_balance on
 
 # floating windows are always on top (default: off)
-yabai -m config window_topmost off
+yabai -m config window_topmost on
 
 # Windows' borders
 yabai -m config window_border off

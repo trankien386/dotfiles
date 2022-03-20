@@ -39,3 +39,7 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden -E 'Library/''
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type d --hidden -E 'Library/'"
 
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --exclude ".git" . "$1" 'Library/'
+}

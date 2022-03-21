@@ -2,6 +2,8 @@
 " Need to load before vim-polyglot is loaded
 let g:polyglot_disabled = ['autoindent', 'sensible']
 
+
+
 "Specify a directory for plugins
 call plug#begin()
 
@@ -32,7 +34,9 @@ Plug 'rakr/vim-one'
 " Initialize plugin system
 call plug#end()
 
-" VIM AND NVIM CONFIGURATIONS
+
+
+""	VIM AND NVIM CONFIGURATIONS
 
 "Indent with spaces
 set softtabstop=2 shiftwidth=2 expandtab
@@ -40,7 +44,7 @@ set softtabstop=2 shiftwidth=2 expandtab
 set smartindent
 
 "Sign Collumn on the left
-set signcolumn=yes
+set signcolumn=no
 
 "Demonstrate line numbers on the left
 set number relativenumber 
@@ -67,6 +71,9 @@ set ignorecase smartcase
 "Access system clipboard
 set clipboard^=unnamed,unnamedplus
 
+"Paste texts from other windows to terminal VIM correctly
+set pastetoggle=<F2> 
+
 "No line wrap
 set nowrap
 
@@ -75,12 +82,6 @@ let g:netrw_liststyle = 3
 
 "netrw - open files in new vertical split window
 let g:netrw_browse_split = 4
-
-"netrw - hide files
-let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
-
-"disable top banner
-let g:netrw_banner=0
 
 "Open splits to the right
 let g:netrw_altv=1
@@ -103,20 +104,106 @@ set lazyredraw
 " Time to trigger CursorHold event in ms
 set updatetime=1000
 
-" Fallback to 256 color mode when true color isn't supported
-if ($TERM_PROGRAM == 'Apple_Terminal')
-  set notermguicolors
-  highlight Pmenu ctermbg=235
-else
-  set termguicolors
+"Mapping <Leader>] for html to css tags jumping
+nnoremap <leader>] :tag /<c-r>=expand('<cword>')<cr><cr>
+
+" No generate backup files and swap files
+set nobackup nowritebackup noswapfile
+
+" Use ripgrep instead
+if executable('rg')
+      set grepprg=rg\ --vimgrep
+      set grepformat=%f:%l:%c:%m
 endif
 
-"" THEME
+" Open new split panes to right, which feels more natural
+set splitright
 
-" tab colors
-" highlight TabLineSel ctermbg=237 ctermfg=252
-" highlight TabLine ctermfg=247
+" Clear last search pattern
+:command Clear let @/=""
 
+" Omni completion
+set completeopt+=longest,menuone,noinsert
+set omnifunc=syntaxcomplete#Complete
+imap <M-space> <c-x><c-o>
+
+" Switching buffers shortcut
+nnoremap ,b :ls<cr>:b<space>
+map <Right> :bnext<CR>
+map <Left> :bprevious<CR>
+
+" AUTO SAVE FILES WHEN VIM LOSTS FOCUS AND SWITCHING BUFFERS
+function AutoSave()
+    if @% != ""
+        " No filename for current buffer
+        update
+    endif
+endfunction
+
+au FocusLost * if !count('netrw',&filetype) && !count('terminal',&buftype)
+	\ | call AutoSave()
+	\ | endif
+au BufLeave * if !count('netrw',&filetype) && !count('terminal',&buftype)
+	\ | call AutoSave()
+	\ | endif
+
+" PERSISTENT UNDO
+" Guard for distributions lacking the persistent_undo feature.
+if has('persistent_undo')
+  " define a path to store persistent_undo files.
+  let target_path = expand('~/.cache/undodir')
+
+  " create the directory and any parent directories if the location does not exist.
+  if !isdirectory(target_path)
+    call system('mkdir -p ' . target_path)
+  endif
+
+  " point Vim to the defined undo directory.
+  let &undodir = target_path
+
+  " finally, enable undo persistence.
+  set undofile
+endif
+
+
+
+""	STATUS LINE
+function! ActiveStatusLine()
+  highlight leftSection cterm=bold
+  setlocal laststatus=2
+  setlocal statusline=\ %F
+  setlocal statusline+=\ %m
+  setlocal statusline+=\ %h
+  setlocal statusline+=\ %w
+  setlocal statusline+=%<
+  setlocal statusline+=%=
+  setlocal statusline+=\ %l/%L\ 
+  setlocal statusline+=\:\ %c\ 
+endfunction
+
+function! InactiveStatusLine()
+  setlocal laststatus=2
+  setlocal statusline=%<
+  setlocal statusline+=\ %F
+  setlocal statusline+=\ %m
+endfunction
+
+" STATUSLINE FOR SPECIFIC WINDOWS
+autocmd FileType netrw setlocal statusline=%f
+autocmd TerminalOpen * setlocal statusline=%f
+
+" ACTIVE, INACTIVE STATUSLINE FOR WINDOWS
+autocmd BufEnter,WinEnter * if !count('netrw',&filetype) && !count('terminal',&buftype)
+  \ | call ActiveStatusLine()
+  \ | endif
+
+autocmd BufLeave,WinLeave * if !count('netrw',&filetype) && !count('terminal',&buftype)
+  \ | call InactiveStatusLine()
+  \ | endif
+
+
+
+""	THEME
 "Change theme depending on the time of day
 let hr = (strftime('%H'))
 if ($TERM_PROGRAM == 'Apple_Terminal')
@@ -136,164 +223,12 @@ elseif hr >= 0
   highlight Normal ctermbg=0
 endif
 
-"Mapping <Leader>] for html to css tags jumping
-nnoremap <leader>] :tag /<c-r>=expand('<cword>')<cr><cr>
-
-" No generate backup files and swap files
-set nobackup nowritebackup noswapfile
-
-" Use ripgrep instead
-if executable('rg')
-      set grepprg=rg\ --vimgrep
-      set grepformat=%f:%l:%c:%m
-endif
-
-" Open new split panes to right, which feels more natural
-set splitright
-
-" Easier split navigation
-nnoremap <M-j> <C-W><C-J>
-nnoremap <M-k> <C-W><C-K>
-nnoremap <M-l> <C-W><C-L>
-nnoremap <M-h> <C-W><C-H>
-
-" Clear last search pattern
-:command Clear let @/=""
-
-" Omni completion
-set completeopt+=longest,menuone,noinsert
-set omnifunc=syntaxcomplete#Complete
-imap <M-space> <c-x><c-o>
-
-" List chars
-set listchars=eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
-
-" Switching buffers shortcut
-nnoremap ,b :ls<cr>:b<space>
-nnoremap <F1> :ls<cr>:b<space>
-map <Right> :bnext<CR>
-map <Left> :bprevious<CR>
-
-" Auto save files when vim losts focus and switching buffers
-function! AutoSave()
-    if @% != ""
-        " No filename for current buffer
-        update
-    endif
-endfunction
-
-autocmd FocusLost * call AutoSave()
-autocmd BufLeave * call AutoSave()
-
-" No auto cd to files directory
-set noautochdir
-
-" Terminal shortcut
-tnoremap <A-h> <C-\><C-N><C-w>h
-tnoremap <A-j> <C-\><C-N><C-w>j
-tnoremap <A-k> <C-\><C-N><C-w>k
-tnoremap <A-l> <C-\><C-N><C-w>l
-
-" If open fzf windows inside terminal windows, this will auto remap <Esc>
-autocmd BufLeave * if count('terminal',&buftype)
-  \ | tnoremap <Esc> <C-\><C-n>
-  \ | endif
-
-" Status line
-
-highlight rightSection ctermbg=NONE
-highlight middle ctermbg=NONE
-highlight middleInactive ctermbg=NONE guifg=darkgrey
-
-function! ActiveStatusLine()
-  highlight leftSection cterm=bold
-  setlocal laststatus=2
-  setlocal statusline=
-  setlocal statusline+=%#leftSection#
-  setlocal statusline+=\ %{Signify()}
-  setlocal statusline+=\ %{FugitiveHead()}
-  setlocal statusline+=\ %#middle#
-  setlocal statusline+=\ %F
-  setlocal statusline+=\ %m
-  setlocal statusline+=\ %h
-  setlocal statusline+=\ %w
-  setlocal statusline+=%<
-  setlocal statusline+=\ %{CocNvimDiagnostic()}
-  setlocal statusline+=%=
-  setlocal statusline+=%{gutentags#statusline()}
-  setlocal statusline+=\ %#rightSection#
-  setlocal statusline+=\ %l
-  setlocal statusline+=:\%c\ 
-endfunction
-
-function! InactiveStatusLine()
-  setlocal laststatus=2
-  setlocal statusline=
-  setlocal statusline+=\ %#middleInactive#
-  setlocal statusline+=%<
-  setlocal statusline+=\ %f
-  setlocal statusline+=\ %m
-endfunction
-
-function! TerminalStatusLine()
-  setlocal laststatus=2
-  setlocal statusline=
-  setlocal statusline+=\ %{strpart(expand('%f'),16,23)}
-  tnoremap <Esc> <C-\><C-n>
-endfunction
-
-augroup statusline
-  autocmd!
-
-  " Statusline for specific windows
-  autocmd FileType netrw setlocal statusline=%#leftSection#\ Netrw\ %#middle# | hi leftSection cterm=NONE
-  autocmd FileType startify setlocal statusline=%#leftSection#\ Startify\ %#middle# | hi leftSection cterm=NONE
-  autocmd FileType undotree setlocal statusline=%!t:undotree.GetStatusLine()
-  autocmd TermOpen * call TerminalStatusLine()
-
-  " Active, Inactive statusline for vim windows
-  autocmd BufEnter,WinEnter * if !count(['netrw','startify','undotree'],&filetype) && !count('terminal',&buftype)
-    \ | call ActiveStatusLine()
-    \ | endif
-  autocmd BufLeave,WinLeave * if !count(['netrw','startify','undotree'],&filetype) && !count('terminal',&buftype)
-    \ | call InactiveStatusLine()
-    \ | endif
-
-  " Active, Inactive statusline for netrw window
-  autocmd WinLeave * if count('netrw',&filetype)
-    \ | setlocal statusline=%#subsectionInactive#\ Netrw\ %#middle#
-    \ | endif
-  autocmd WinEnter * if count('netrw',&filetype)
-    \ | setlocal statusline=%#leftSection#\ Netrw\ %#middle#
-    \ | endif
-
-" Active, Inactive statusline for startify window
-  autocmd WinLeave * if count('startify',&filetype)
-    \ | setlocal statusline=%#subsectionInactive#\ Startify\ %#middle#
-    \ | endif
-  autocmd WinEnter * if count('startify',&filetype)
-    \ | setlocal statusline=%#leftSection#\ Startify\ %#middle#
-    \ | endif
-
-augroup END
-
-" PERSISTENT UNDO
-" Guard for distributions lacking the persistent_undo feature.
-if has('persistent_undo')
-  " define a path to store persistent_undo files.
-  let target_path = expand('~/.config/persisted-undo/')
-
-  " create the directory and any parent directories
-  " if the location does not exist.
-  if !isdirectory(target_path)
-    call system('mkdir -p ' . target_path)
-  endif
-
-  " point Vim to the defined undo directory.
-  let &undodir = target_path
-
-  " finally, enable undo persistence.
-  set undofile
+" Fallback to 256 color mode when true color isn't supported
+if ($TERM_PROGRAM == 'Apple_Terminal')
+  set notermguicolors
+  highlight Pmenu ctermbg=235
+else
+  set termguicolors
 endif
 
 

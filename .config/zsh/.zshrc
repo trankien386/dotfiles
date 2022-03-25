@@ -9,10 +9,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # INSTALL POWERLEVEL10K
-source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
+source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 
 # POWERLEVEL10K'S CONFIGURATION FILE
-[[ ! -f ~/.config/powerlevel10k/p10k.zsh ]] || source ~/.config/powerlevel10k/p10k.zsh
+[[ ! -f ~/.config/p10k.zsh ]] || source ~/.config/p10k.zsh
 
 # INSTALL FAST-SYNTAX-HIGHLIGHTING
 source ~/.config/fsh/fast-syntax-highlighting.plugin.zsh

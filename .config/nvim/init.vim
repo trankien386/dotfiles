@@ -38,99 +38,90 @@ call plug#end()
 
 ""	VIM AND NVIM CONFIGURATIONS
 
-"Indent with spaces
-set softtabstop=2 shiftwidth=2 expandtab
+" INDENT WITH SPACES
+set softtabstop=2 shiftwidth=2 expandtab 
 
-set smartindent
-
-"Sign Collumn on the left
-set signcolumn=no
-
-"Demonstrate line numbers on the left
-set number relativenumber 
-
-"Open files in Chrome
+" OPEN FILES IN CHROME
 nnoremap <F12>c :exe ' !open -a /Applications/Google\ Chrome.app %'<CR>
 
-"Open files in Safari 
+" OPEN FILES IN SAFARI
 nnoremap <F12>s :exe ' !open -a /Applications/Safari.app %'<CR>
 
-"Enable vim fuzzy search
-"Search all subdirectories and recursively
+" ENABLE VIM FUZZY SEARCH
+" SEARCH ALL SUBDIRECTORIES AND RECURSIVELY
 set path+=**          
 
+" AUTO COMPLETION OPTIONS
 set wildmode=longest,full
 set wildignorecase
 
-"Open quickfix window automatically when grep
+" OPEN QUICKFIX WINDOW AUTOMATICALLY WHEN GREP
 autocmd QuickFixCmdPost *grep* cwindow
 
-" Use case insensitive search, except when using capital letters
+" USE CASE INSENSITIVE SEARCH, EXCEPT WHEN USING CAPITAL LETTERS
 set ignorecase smartcase 
 
-"Access system clipboard
+" ACCESS SYSTEM CLIPBOARD
 set clipboard^=unnamed,unnamedplus
 
-"Paste texts from other windows to terminal VIM correctly
+" PASTE TEXTS FROM OTHER WINDOWS TO TERMINAL VIM CORRECTLY
 set pastetoggle=<F2> 
 
-"No line wrap
+" NO LINE WRAP
 set nowrap
 
-"netrw list style
+" NETRW LIST STYLE
 let g:netrw_liststyle = 3
 
-"netrw - open files in new vertical split window
+" NETRW - OPEN FILES IN NEW VERTICAL SPLIT WINDOW
 let g:netrw_browse_split = 4
 
-"Open splits to the right
+" OPEN SPLITS TO THE RIGHT
 let g:netrw_altv=1
 
-"Add fzf to vim
-set rtp+=/usr/local/share/fzf
+" ADD FZF TO VIM
+set rtp+=/usr/local/opt/fzf
 
-"Switch buffers without saving changes
+" SWITCH BUFFERS WITHOUT SAVING CHANGES
 set hidden
 
-" Instead of failing a command because of unsaved changes, instead raise a dialogue asking if you wish to save changed files.
+" INSTEAD OF FAILING A COMMAND BECAUSE OF UNSAVED CHANGES, INSTEAD RAISE A DIALOGUE ASKING IF YOU WISH TO SAVE CHANGED FILES.
 set confirm
 
-" Alow moving cursor to places where theres no text in visual block mode
+" ALOW MOVING CURSOR TO PLACES WHERE THERES NO TEXT IN VISUAL BLOCK MODE
 set virtualedit=block
 
-" Prevent updating screen while executing macros, registers and other commands that have not been typed
+" PREVENT UPDATING SCREEN WHILE EXECUTING MACROS, REGISTERS AND OTHER COMMANDS THAT HAVE NOT BEEN TYPED
 set lazyredraw
 
-" Time to trigger CursorHold event in ms
+" TIME TO TRIGGER CURSORHOLD EVENT IN MS
 set updatetime=1000
 
-"Mapping <Leader>] for html to css tags jumping
+" MAPPING <LEADER>] FOR HTML TO CSS TAGS JUMPING
 nnoremap <leader>] :tag /<c-r>=expand('<cword>')<cr><cr>
 
-" No generate backup files and swap files
+" NO BACKUP FILES AND SWAP FILES
 set nobackup nowritebackup noswapfile
 
-" Use ripgrep instead
+" USE RIPGREP INSTEAD OF GREP
 if executable('rg')
       set grepprg=rg\ --vimgrep
       set grepformat=%f:%l:%c:%m
 endif
 
-" Open new split panes to right, which feels more natural
+" OPEN NEW SPLIT PANES TO RIGHT
 set splitright
 
-" Clear last search pattern
+" CLEAR LAST SEARCH PATTERN
 :command Clear let @/=""
 
-" Omni completion
+" OMNI COMPLETION
 set completeopt+=longest,menuone,noinsert
 set omnifunc=syntaxcomplete#Complete
 imap <M-space> <c-x><c-o>
 
-" Switching buffers shortcut
+" SWITCHING BUFFERS SHORTCUT
 nnoremap ,b :ls<cr>:b<space>
-map <Right> :bnext<CR>
-map <Left> :bprevious<CR>
 
 " AUTO SAVE FILES WHEN VIM LOSTS FOCUS AND SWITCHING BUFFERS
 function AutoSave()
@@ -169,20 +160,18 @@ endif
 
 ""	STATUS LINE
 function! ActiveStatusLine()
-  highlight leftSection cterm=bold
-  setlocal laststatus=2
+  setlocal laststatus=1
   setlocal statusline=\ %F
   setlocal statusline+=\ %m
   setlocal statusline+=\ %h
   setlocal statusline+=\ %w
   setlocal statusline+=%<
   setlocal statusline+=%=
-  setlocal statusline+=\ %l/%L\ 
+  setlocal statusline+=\ %l\ 
   setlocal statusline+=\:\ %c\ 
 endfunction
 
 function! InactiveStatusLine()
-  setlocal laststatus=2
   setlocal statusline=%<
   setlocal statusline+=\ %F
   setlocal statusline+=\ %m
@@ -191,45 +180,30 @@ endfunction
 " STATUSLINE FOR SPECIFIC WINDOWS
 autocmd FileType netrw setlocal statusline=%f
 autocmd TerminalOpen * setlocal statusline=%f
+autocmd FileType undotree setlocal statusline=%!t:undotree.GetStatusLine()
+autocmd FileType diff setlocal statusline=difference
 
 " ACTIVE, INACTIVE STATUSLINE FOR WINDOWS
-autocmd BufEnter,WinEnter * if !count('netrw',&filetype) && !count('terminal',&buftype)
+autocmd BufEnter,WinEnter * if !count(['netrw','undotree','diff'],&filetype) && !count('terminal',&buftype)
   \ | call ActiveStatusLine()
   \ | endif
 
-autocmd BufLeave,WinLeave * if !count('netrw',&filetype) && !count('terminal',&buftype)
+autocmd BufLeave,WinLeave * if !count(['netrw','undotree','diff'],&filetype) && !count('terminal',&buftype)
   \ | call InactiveStatusLine()
   \ | endif
 
 
 
 ""	THEME
-"Change theme depending on the time of day
-let hr = (strftime('%H'))
-if ($TERM_PROGRAM == 'Apple_Terminal')
-  colorscheme onedark
-" set background color for terminal emulators don't support true color
-  highlight Normal ctermbg=0
-elseif hr >= 19
-  colorscheme onedark
-" set background color for terminal emulators don't support true color
-  highlight Normal ctermbg=0
-elseif hr >= 5
-  colorscheme one
-  set background=light
-elseif hr >= 0
-  colorscheme onedark
-" set background color for terminal emulators don't support true color
-  highlight Normal ctermbg=0
+colorscheme onedark
+
+" TRANSPARENT BACKGROUND FOR VSCODE'S TERMINAL
+if ($TERM_PROGRAM == 'vscode')
+  highlight Normal ctermbg=NONE
 endif
 
-" Fallback to 256 color mode when true color isn't supported
-if ($TERM_PROGRAM == 'Apple_Terminal')
-  set notermguicolors
-  highlight Pmenu ctermbg=235
-else
-  set termguicolors
-endif
+" Omni completion's popup color
+highlight Pmenu ctermbg=235
 
 
 
@@ -373,22 +347,13 @@ let g:startify_change_to_dir = 1
 let g:startify_skiplist = [ '.vimrc', '.zshrc', 'coc-settings.json']
 
 " VIM-GUTENTAGS
-let g:gutentags_add_default_project_roots = 0
-let g:gutentags_project_root = ['package.json', '.git']
-
-" One true tags directory
-let g:gutentags_cache_dir = expand('~/.cache/vim/ctags/')
-
-" Auto generate tags file
-let g:gutentags_generate_on_new = 1
-let g:gutentags_generate_on_missing = 1
-let g:gutentags_generate_on_write = 1
-let g:gutentags_generate_on_empty_buffer = 0
+" Ctags file location
+let g:gutentags_cache_dir ='~/.cache'
 
 " Include more info for tags
 let g:gutentags_ctags_extra_args = [
   \ '--tag-relative=yes',
-  \ '--fields=+ailmnS',
+  \ '--fields=+aimnS',
   \ ]
 
 " VIM-SIGNIFY
@@ -456,10 +421,13 @@ let g:list_of_insert_keys = ["<LEFT>", "<RIGHT>"]
 let g:hardtime_ignore_quickfix = 1
 let g:hardtime_allow_different_key = 1
 
-" FZF.VIM
-" Remap <Esc> back to default to easily exit fzf window by <Esc>
-autocmd FileType fzf setlocal noruler | tnoremap <Esc> <Esc>
-let g:fzf_nvim_statusline = 0
+" FZF
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+            \ {'bg' : ['bg', 'Normal'],
+            \ 'fg+' : ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+            \ 'hl+' : ['fg', 'Statement'],
+            \ 'info': ['fg', 'PreProc']}
 
 " VEM-TABLINE
 " let g:vem_tabline_show_number='buffnr'
@@ -485,5 +453,3 @@ function! s:ToggleBlame()
 endfunction
 
 nnoremap <silent> <F2> :call <SID>ToggleBlame()<CR>
-
-

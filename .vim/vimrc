@@ -1,0 +1,248 @@
+""	VIM ONLY CONFIGURATIONS
+
+" SYNTAX HIGHTLIGHTING
+syntax enable
+
+" FILE TYPE DETECTION
+filetype plugin indent on
+
+" AUTO INDENT LINES
+set autoindent
+
+" DETECT IF OPENING FILES HAVE BEEN CHANGED OUTSIDE OF VIM
+set autoread
+
+" MUTE ERROR SOUND AND FLASH
+set belloff=all
+
+" HIGHLIGHT ALL SEARCH MATCHES
+set hlsearch
+
+" MOVE THE CURSOR TO THE MATCHED STRING, WHILE TYPING THE SEARCH PATTERN
+set incsearch
+
+" SHOW COMMANDS ARE TYPED
+set showcmd
+
+" STOP CERTAIN MOVEMENTS FROM ALWAYS GOING TO THE FIRST CHARACTER OF A LINE
+set nostartofline
+
+" SHOWS MULTIPLE MATCHES ON ONE LINE WHEN DOING TAB COMPLETION
+set wildmenu
+
+" VIMINFO PATH
+set viminfo+=n~/.cache/viminfo
+
+
+
+""	VIM AND NVIM CONFIGURATIONS
+
+" INDENT WITH SPACES
+set softtabstop=2 shiftwidth=2 expandtab 
+
+" OPEN FILES IN CHROME
+nnoremap <F12>c :exe ' !open -a /Applications/Google\ Chrome.app %'<CR>
+
+" OPEN FILES IN SAFARI
+nnoremap <F12>s :exe ' !open -a /Applications/Safari.app %'<CR>
+
+" ENABLE VIM FUZZY SEARCH
+" SEARCH ALL SUBDIRECTORIES AND RECURSIVELY
+set path+=**          
+
+" AUTO COMPLETION OPTIONS
+set wildmode=longest,full
+set wildignorecase
+
+" OPEN QUICKFIX WINDOW AUTOMATICALLY WHEN GREP
+autocmd QuickFixCmdPost *grep* cwindow
+
+" USE CASE INSENSITIVE SEARCH, EXCEPT WHEN USING CAPITAL LETTERS
+set ignorecase smartcase 
+
+" ACCESS SYSTEM CLIPBOARD
+set clipboard^=unnamed,unnamedplus
+
+" PASTE TEXTS FROM OTHER WINDOWS TO TERMINAL VIM CORRECTLY
+set pastetoggle=<F2> 
+
+" NO LINE WRAP
+set nowrap
+
+" NETRW LIST STYLE
+let g:netrw_liststyle = 3
+
+" NETRW - OPEN FILES IN NEW VERTICAL SPLIT WINDOW
+let g:netrw_browse_split = 4
+
+" OPEN SPLITS TO THE RIGHT
+let g:netrw_altv=1
+
+" ADD FZF TO VIM
+set rtp+=/usr/local/opt/fzf
+
+" SWITCH BUFFERS WITHOUT SAVING CHANGES
+set hidden
+
+" INSTEAD OF FAILING A COMMAND BECAUSE OF UNSAVED CHANGES, INSTEAD RAISE A DIALOGUE ASKING IF YOU WISH TO SAVE CHANGED FILES.
+set confirm
+
+" ALOW MOVING CURSOR TO PLACES WHERE THERES NO TEXT IN VISUAL BLOCK MODE
+set virtualedit=block
+
+" PREVENT UPDATING SCREEN WHILE EXECUTING MACROS, REGISTERS AND OTHER COMMANDS THAT HAVE NOT BEEN TYPED
+set lazyredraw
+
+" TIME TO TRIGGER CURSORHOLD EVENT IN MS
+set updatetime=1000
+
+" MAPPING <LEADER>] FOR HTML TO CSS TAGS JUMPING
+nnoremap <leader>] :tag /<c-r>=expand('<cword>')<cr><cr>
+
+" NO BACKUP FILES AND SWAP FILES
+set nobackup nowritebackup noswapfile
+
+" USE RIPGREP INSTEAD OF GREP
+if executable('rg')
+      set grepprg=rg\ --vimgrep
+      set grepformat=%f:%l:%c:%m
+endif
+
+" OPEN NEW SPLIT PANES TO RIGHT
+set splitright
+
+" CLEAR LAST SEARCH PATTERN
+:command Clear let @/=""
+
+" OMNI COMPLETION
+set completeopt+=longest,menuone,noinsert
+set omnifunc=syntaxcomplete#Complete
+imap <M-space> <c-x><c-o>
+
+" SWITCHING BUFFERS SHORTCUT
+nnoremap ,b :ls<cr>:b<space>
+
+" AUTO SAVE FILES WHEN VIM LOSTS FOCUS AND SWITCHING BUFFERS
+function AutoSave()
+    if @% != ""
+        " No filename for current buffer
+        update
+    endif
+endfunction
+
+au FocusLost * if !count('netrw',&filetype) && !count('terminal',&buftype)
+	\ | call AutoSave()
+	\ | endif
+au BufLeave * if !count('netrw',&filetype) && !count('terminal',&buftype)
+	\ | call AutoSave()
+	\ | endif
+
+" PERSISTENT UNDO
+" Guard for distributions lacking the persistent_undo feature.
+if has('persistent_undo')
+  " define a path to store persistent_undo files.
+  let target_path = expand('~/.cache/undodir')
+
+  " create the directory and any parent directories if the location does not exist.
+  if !isdirectory(target_path)
+    call system('mkdir -p ' . target_path)
+  endif
+
+  " point Vim to the defined undo directory.
+  let &undodir = target_path
+
+  " finally, enable undo persistence.
+  set undofile
+endif
+
+
+
+""	STATUS LINE
+function! ActiveStatusLine()
+  setlocal laststatus=1
+  setlocal statusline=\ %F
+  setlocal statusline+=\ %m
+  setlocal statusline+=\ %h
+  setlocal statusline+=\ %w
+  setlocal statusline+=%<
+  setlocal statusline+=%=
+  setlocal statusline+=\ %l\ 
+  setlocal statusline+=\:\ %c\ 
+endfunction
+
+function! InactiveStatusLine()
+  setlocal statusline=%<
+  setlocal statusline+=\ %F
+  setlocal statusline+=\ %m
+endfunction
+
+" STATUSLINE FOR SPECIFIC WINDOWS
+autocmd FileType netrw setlocal statusline=%f
+autocmd TerminalOpen * setlocal statusline=%f
+autocmd FileType undotree setlocal statusline=%!t:undotree.GetStatusLine()
+autocmd FileType diff setlocal statusline=difference
+
+" ACTIVE, INACTIVE STATUSLINE FOR WINDOWS
+autocmd BufEnter,WinEnter * if !count(['netrw','undotree','diff'],&filetype) && !count('terminal',&buftype)
+  \ | call ActiveStatusLine()
+  \ | endif
+
+autocmd BufLeave,WinLeave * if !count(['netrw','undotree','diff'],&filetype) && !count('terminal',&buftype)
+  \ | call InactiveStatusLine()
+  \ | endif
+
+
+
+""	THEME
+colorscheme onedark
+
+" TRANSPARENT BACKGROUND
+highlight Normal ctermbg=NONE
+
+" Omni completion's popup color
+highlight Pmenu ctermbg=235
+
+
+
+"" VIM PLUGINS' CONFIGURATIONS
+
+" VIM-BETTER-OMNICOMPLETE-JS-COMPLETION
+let g:vimjs#casesensistive = 0
+let g:vimjs#smartcomplete = 1
+let g:vimjs#chromeapis = 1
+
+" RAINBOW
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+\ 'ctermfgs': ['208', '171', '220', '204'],
+\ 'separately': {
+\   'html': 0,
+\   'css': 0,
+\ }
+\}
+
+" UNDOTREE
+let g:undotree_WindowLayout = 2
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_HighlightChangedText = 1
+let g:undotree_HighlightChangedWithSign = 1
+" Opening Diff panel in neovim will causes errors
+nnoremap <F3> :UndotreeToggle<CR>
+
+" FZF
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+            \ {'bg' : ['bg', 'Normal'],
+            \ 'fg+' : ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+            \ 'hl+' : ['fg', 'Statement'],
+            \ 'info': ['fg', 'PreProc']}
+
+" VIM-GUTENTAGS
+" Ctags file location
+let g:gutentags_cache_dir ='~/.cache'
+
+" Include more info for tags
+let g:gutentags_ctags_extra_args = [
+  \ '--tag-relative=yes',
+  \ '--fields=+aimnS',
+  \ ]

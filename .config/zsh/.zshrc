@@ -12,19 +12,19 @@ fi
 source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
 
 # POWERLEVEL10K'S CONFIGURATION FILE
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f ~/.config/powerlevel10k/p10k.zsh ]] || source ~/.config/powerlevel10k/p10k.zsh
+
+# INSTALL FAST-SYNTAX-HIGHLIGHTING
+source ~/.config/fsh/fast-syntax-highlighting.plugin.zsh
 
 # AUTO CD
 setopt AUTO_CD
 
-# INSTALL FAST SYNTAX HIGHLIGHTING
-source ~/.config/fsh/fast-syntax-highlighting.plugin.zsh
-
-# INSTALL FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# FZF'S CONFIGURATION FILE
+[ -f ~/.config/fzf.zsh ] && source ~/.config/fzf.zsh
 
 # ZSH AUTO COMPLETE:
-autoload -Uz compinit && compinit
+autoload -Uz compinit && compinit -d ~/.cache/zcompdump
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' '+l:|=* r:|=*'
 zstyle ':completion:*' use-cache
@@ -36,6 +36,9 @@ setopt SHARE_HISTORY
 # DO NOT STORE DUPLICATIONS
 setopt HIST_IGNORE_ALL_DUPS
 
+# HISTORY FILE'S LOCATION
+export HISTFILE=~/.cache/zsh_history
+
 # ENABLE COLOR FOR LS COMMAND'S OUTPUT
 export CLICOLOR=0
 
@@ -46,7 +49,7 @@ alias -g rm="rm -i"
 alias dot='/usr/bin/git --git-dir=/Users/Kien/.dotfiles --work-tree=/Users/Kien'
 
 # BULLSHIT ALIAS
-alias bs="bullshit-generator"
+#alias bs="bullshit-generator"
 
 # NO MORE SECRETS
-alias ls=' ls -AtUh | nms -as -f yellow'
+#alias ls=' ls -AtUh | nms -as -f yellow'

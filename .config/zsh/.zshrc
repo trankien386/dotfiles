@@ -48,6 +48,13 @@ alias -g rm="rm -i"
 # BARE GIT REPO FOR DOTFILES
 alias dot='/usr/bin/git --git-dir=/Users/Kien/.dotfiles --work-tree=/Users/Kien'
 
+# PATH FOR PYTHON PACKAGES
+export PATH="/Users/kien/Library/Python/3.8/bin:$PATH"
+
+# SPORTIFY_DL PATH
+export SPOTIPY_CLIENT_ID=a874163163b8454fb2e636e3bc472298
+export SPOTIPY_CLIENT_SECRET=ab938f18c0e3428eb345898f0df133a6
+
 # BULLSHIT ALIAS
 #alias bs="bullshit-generator"
 

@@ -21,25 +21,6 @@
       ]
     },
     {
-      "description": "Press Control + s to stack the current window with the recent window.",
-      "manipulators": [
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "s",
-            "modifiers": {
-              "mandatory": ["left_control"]
-            }
-          },
-          "to": [
-            {
-              "shell_command": "/usr/local/bin/yabai -m window --stack recent"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "description": "Press Fn + h/j/k/l to focus the current window.",
       "manipulators": [
         {

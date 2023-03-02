@@ -20,44 +20,21 @@ yabai -m rule --add title="Privacy" manage=off
 yabai -m rule --add title="Websites" manage=off
 yabai -m rule --add title="Advanced" manage=off
 yabai -m rule --add title="Info" manage=off
-yabai -m rule --add title='Temperature & Fan Charting' manage=off
 yabai -m rule --add title="Extensions" manage=off
 yabai -m rule --add title="Copy" manage=off
 yabai -m rule --add title="iCloud Progress" manage=off
-yabai -m rule --add title="Trash" manage=off
-yabai -m rule --add app="System Preferences" manage=off
-yabai -m rule --add app="Activity Monitor" manage=off
-yabai -m rule --add app="Disk Utility" manage=off
-yabai -m rule --add app="Karabiner-Elements" manage=off
-yabai -m rule --add app="Contacts" manage=off
-yabai -m rule --add app="Messages" manage=off
-yabai -m rule --add app="Find My" manage=off
-yabai -m rule --add app="Music" manage=off
-yabai -m rule --add app="Podcasts" manage=off
-yabai -m rule --add app="TV" manage=off
+yabai -m rule --add title="Trash" manage=on
+yabai -m rule --add title="Raycast Preferences" manage=on
 yabai -m rule --add app="App Store" manage=off
-yabai -m rule --add app="Voice Memos" manage=off
-yabai -m rule --add app="FaceTime" manage=off
-yabai -m rule --add app="Photos" manage=off
-yabai -m rule --add app="Stocks" manage=off
-yabai -m rule --add app="Books" manage=off
-yabai -m rule --add app="Calculator" manage=off
-yabai -m rule --add app="Authy Desktop" manage=off
 yabai -m rule --add app="The Unarchiver" manage=off
-yabai -m rule --add app="coconutBattery" manage=off
-yabai -m rule --add app="AdGuard for Safari" manage=off
-yabai -m rule --add app="Zalo" manage=off
-yabai -m rule --add app="Sudoku" manage=off
 yabai -m rule --add app="Archive Utility" manage=off
 yabai -m rule --add app="Digital Color Meter" manage=off
-yabai -m rule --add app="System Information" manage=off
 yabai -m rule --add app="Transmission" manage=off
-yabai -m rule --add app="AppCleaner" manage=off
 yabai -m rule --add app="Installer" manage=off
 yabai -m rule --add app="QuickTime Player" manage=off
-yabai -m rule --add app="Boot Camp Assistant" manage=off
 yabai -m rule --add app="Stickies" manage=off
-yabai -m rule --add app="DaisyDisk" manage=off
+yabai -m rule --add app="Karabiner-EventViewer" manage=off
+
 
 # Focus the most recent window after a window/application is closed
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus recent"

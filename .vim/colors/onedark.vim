@@ -85,6 +85,9 @@ function! s:h(group, style, ...)
     if (has_key(a:style, "gui"))
       let s:highlight.gui = a:style.gui
     endif
+    if (has_key(a:style, "cterm"))
+      let s:highlight.cterm = a:style.cterm
+    endif
   else
     let s:highlight = a:style
     let s:group_colors[a:group] = s:highlight " Cache default highlight group settings
@@ -197,13 +200,13 @@ call s:h("Number", { "fg": s:dark_yellow }) " a number constant: 234, 0xff
 call s:h("Boolean", { "fg": s:dark_yellow }) " a boolean constant: TRUE, false
 call s:h("Float", { "fg": s:dark_yellow }) " a floating point constant: 2.3e10
 call s:h("Identifier", { "fg": s:red }) " any variable name
-call s:h("Function", { "fg": s:yellow }) " function name (also: methods for classes)
+call s:h("Function", { "fg": s:blue }) " function name (also: methods for classes)
 call s:h("Statement", { "fg": s:purple }) " any statement
 call s:h("Conditional", { "fg": s:purple }) " if, then, else, endif, switch, etc.
 call s:h("Repeat", { "fg": s:purple }) " for, do, while, etc.
 call s:h("Label", { "fg": s:purple }) " case, default, etc.
 call s:h("Operator", { "fg": s:purple }) " sizeof", "+", "*", etc.
-call s:h("Keyword", { "fg": s:red }) " any other keyword
+call s:h("Keyword", { "fg": s:purple }) " any other keyword
 call s:h("Exception", { "fg": s:purple }) " try, catch, throw
 call s:h("PreProc", { "fg": s:yellow }) " generic Preprocessor
 call s:h("Include", { "fg": s:blue }) " preprocessor #include
@@ -214,7 +217,7 @@ call s:h("Type", { "fg": s:yellow }) " int, long, char, etc.
 call s:h("StorageClass", { "fg": s:yellow }) " static, register, volatile, etc.
 call s:h("Structure", { "fg": s:yellow }) " struct, union, enum, etc.
 call s:h("Typedef", { "fg": s:yellow }) " A typedef
-call s:h("Special", { "fg": s:yellow }) " any special symbol
+call s:h("Special", { "fg": s:blue }) " any special symbol
 call s:h("SpecialChar", { "fg": s:dark_yellow }) " special character in a constant
 call s:h("Tag", {}) " you can use CTRL-] on this
 call s:h("Delimiter", {}) " character that needs attention
@@ -237,9 +240,9 @@ if &diff
   " Don't change the background color in diff mode
   call s:h("CursorLine", { "gui": "underline" }) " the screen line that the cursor is in when 'cursorline' is set
 else
-  call s:h("CursorLine", { "cterm": "underline" }) " the screen line that the cursor is in when 'cursorline' is set
+  call s:h("CursorLine", { "bg": s:cursor_grey }) " the screen line that the cursor is in when 'cursorline' is set
 endif
-call s:h("Directory", { "fg": s:red }) " directory names (and other special names in listings)
+call s:h("Directory", { "fg": s:blue }) " directory names (and other special names in listings)
 call s:h("DiffAdd", { "bg": s:green, "fg": s:black }) " diff mode: Added line
 call s:h("DiffChange", { "fg": s:yellow, "gui": "underline", "cterm": "underline" }) " diff mode: Changed line
 call s:h("DiffDelete", { "bg": s:red, "fg": s:black }) " diff mode: Deleted line
@@ -273,10 +276,10 @@ call s:h("SpellBad", { "fg": s:red, "gui": "underline", "cterm": "underline" }) 
 call s:h("SpellCap", { "fg": s:dark_yellow }) " Word that should start with a capital. This will be combined with the highlighting used otherwise.
 call s:h("SpellLocal", { "fg": s:dark_yellow }) " Word that is recognized by the spellchecker as one that is used in another region. This will be combined with the highlighting used otherwise.
 call s:h("SpellRare", { "fg": s:dark_yellow }) " Word that is recognized by the spellchecker as one that is hardly ever used. spell This will be combined with the highlighting used otherwise.
-call s:h("StatusLine", { "fg": s:black, "bg": s:blue }) " status line of current window
-call s:h("StatusLineNC", { "fg": s:white }) " status lines of not-current windows Note: if this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
-call s:h("StatusLineTerm", { "fg": s:black, "bg": s:green }) " status line of current :terminal window
-call s:h("StatusLineTermNC", { "fg": s:white }) " status line of non-current :terminal window
+call s:h("StatusLine", { "fg": s:white, "bg": s:cursor_grey }) " status line of current window
+call s:h("StatusLineNC", { "fg": s:comment_grey }) " status lines of not-current windows Note: if this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
+call s:h("StatusLineTerm", { "fg": s:white, "bg": s:cursor_grey }) " status line of current :terminal window
+call s:h("StatusLineTermNC", { "fg": s:comment_grey }) " status line of non-current :terminal window
 call s:h("TabLine", { "fg": s:comment_grey }) " tab pages line, not active tab page label
 call s:h("TabLineFill", {}) " tab pages line, where there are no labels
 call s:h("TabLineSel", { "fg": s:white }) " tab pages line, active tab page label
@@ -285,7 +288,7 @@ call s:h("Title", { "fg": s:green }) " titles for output from ":set all", ":auto
 call s:h("Visual", { "bg": s:visual_grey }) " Visual mode selection
 call s:h("VisualNOS", { "bg": s:visual_grey }) " Visual mode selection when vim is "Not Owning the Selection". Only X11 Gui's gui-x11 and xterm-clipboard supports this.
 call s:h("WarningMsg", { "fg": s:yellow }) " warning messages
-call s:h("WildMenu", { "fg": s:black, "bg": s:yellow }) " current match in 'wildmenu' completion
+call s:h("WildMenu", { "fg": s:black, "bg": s:blue }) " current match in 'wildmenu' completion
 
 " }}}
 
@@ -572,8 +575,11 @@ call s:h("GitGutterDelete", { "fg": s:red })
 
 " dense-analysis/ale
 call s:h("ALEError", { "fg": s:red, "gui": "underline", "cterm": "underline" })
-call s:h("ALEWarning", { "fg": s:yellow, "gui": "underline", "cterm": "underline"})
-call s:h("ALEInfo", { "gui": "underline", "cterm": "underline"})
+call s:h("ALEWarning", { "fg": s:yellow, "gui": "underline", "cterm": "underline" })
+call s:h("ALEInfo", { "gui": "underline", "cterm": "underline" })
+call s:h("ALEErrorSign", { "fg": s:red })
+call s:h("ALEWarningSign", { "fg": s:yellow })
+call s:h("ALEInfoSign", { })
 
 " easymotion/vim-easymotion
 call s:h("EasyMotionTarget", { "fg": s:red, "gui": "bold", "cterm": "bold" })
@@ -596,6 +602,9 @@ call s:h("CocErrorSign", { "fg": s:red })
 call s:h("CocWarningSign", { "fg": s:yellow })
 call s:h("CocInfoSign", { "fg": s:blue })
 call s:h("CocHintSign", { "fg": s:cyan })
+call s:h("CocFadeOut", { "fg": s:comment_grey })
+" https://github.com/joshdick/onedark.vim/issues/313
+highlight! link CocMenuSel PmenuSel
 
 " neomake/neomake
 call s:h("NeomakeErrorSign", { "fg": s:red })
@@ -609,10 +618,14 @@ call s:h("mkdLink", { "fg": s:blue })
 call s:h("mkdURL", { "fg": s:cyan, "gui": "underline", "cterm": "underline" })
 
 " prabirshrestha/vim-lsp
-call s:h("LspError", { "fg": s:red })
-call s:h("LspWarning", { "fg": s:yellow })
-call s:h("LspInformation", { "fg": s:blue })
-call s:h("LspHint", { "fg": s:cyan })
+call s:h("LspErrorText", { "fg": s:red })
+call s:h("LspWarningText", { "fg": s:yellow })
+call s:h("LspInformationText", { "fg":s:blue })
+call s:h("LspHintText", { "fg":s:cyan })
+call s:h("LspErrorHighlight", { "fg": s:red, "gui": "underline", "cterm": "underline" })
+call s:h("LspWarningHighlight", { "fg": s:yellow, "gui": "underline", "cterm": "underline" })
+call s:h("LspInformationHighlight", { "fg":s:blue, "gui": "underline", "cterm": "underline" })
+call s:h("LspHintHighlight", { "fg":s:cyan, "gui": "underline", "cterm": "underline" })
 
 " tpope/vim-fugitive
 call s:h("diffAdded", { "fg": s:green })

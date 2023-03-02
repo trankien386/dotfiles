@@ -1,2 +1,16 @@
-.DS_Store
 Library/
+Applications/
+Desktop/
+Documents/
+Downloads/
+Movies/
+Music/
+Pictures/
+Public/
+.DS_Store
+.cache/
+.local/
+.config/zsh/.zsh_sessions
+.config/raycast/
+.config/karabiner/automatic_backups/
+.config/karabiner/karabiner.json

@@ -14,3 +14,5 @@ Public/
 .config/raycast/
 .config/karabiner/automatic_backups/
 .config/karabiner/karabiner.json
+.dotfiles/
+.config/fsh/

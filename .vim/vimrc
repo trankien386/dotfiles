@@ -102,12 +102,6 @@ nnoremap <leader>] :tag /<c-r>=expand('<cword>')<cr><cr>
 " NO BACKUP FILES AND SWAP FILES
 set nobackup nowritebackup noswapfile
 
-" USE RIPGREP INSTEAD OF GREP
-if executable('rg')
-      set grepprg=rg\ --vimgrep
-      set grepformat=%f:%l:%c:%m
-endif
-
 " OPEN NEW SPLIT PANES TO RIGHT
 set splitright
 
@@ -155,6 +149,8 @@ if has('persistent_undo')
   set undofile
 endif
 
+" Show Line Numbers
+set nu
 
 
 ""	STATUS LINE

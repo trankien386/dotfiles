@@ -8,7 +8,6 @@ Music/
 Pictures/
 Public/
 .DS_Store
-.gitconfig
 .cache/
 .local/
 .config/zsh/.zsh_sessions
@@ -18,3 +17,4 @@ Public/
 .dotfiles/
 .config/fsh/
 .Trash/
+.gitconfig

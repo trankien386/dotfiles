@@ -24,7 +24,6 @@ yabai -m rule --add title="Extensions" manage=off
 yabai -m rule --add title="Copy" manage=off
 yabai -m rule --add title="iCloud Progress" manage=off
 yabai -m rule --add title="Trash" manage=on
-yabai -m rule --add title="Raycast Preferences" manage=on
 yabai -m rule --add app="App Store" manage=off
 yabai -m rule --add app="The Unarchiver" manage=off
 yabai -m rule --add app="Archive Utility" manage=off
@@ -34,6 +33,7 @@ yabai -m rule --add app="Installer" manage=off
 yabai -m rule --add app="QuickTime Player" manage=off
 yabai -m rule --add app="Stickies" manage=off
 yabai -m rule --add app="Karabiner-EventViewer" manage=off
+yabai -m rule --add app="Raycast" manage=off
 
 
 # Focus the most recent window after a window/application is closed

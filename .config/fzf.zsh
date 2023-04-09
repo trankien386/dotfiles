@@ -42,7 +42,7 @@ fzf-folder-widget() {
     zle redisplay
     return 0
   fi
-  BUFFER="${BUFFER}${(q)dir}"
+  BUFFER="${BUFFER}/${(q)dir}"
   local ret=$?
   unset dir # ensure this doesn't end up appearing in prompt expansion
   zle reset-prompt

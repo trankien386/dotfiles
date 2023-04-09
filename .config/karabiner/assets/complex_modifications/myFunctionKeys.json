@@ -2,25 +2,6 @@
   "title": "Function keys",
   "rules": [
     {
-      "description": "Press caps lock + C to open Control Center",
-      "manipulators": [
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "c",
-            "modifiers": {
-              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
-            }
-          },
-          "to": [
-            {
-              "shell_command": "osascript ~/Library/Mobile' 'Documents/com~apple~CloudDocs/Scripts/controlcenter.applescript"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "description": "Toggle Caps lock by pressing left shift then right shift",
       "manipulators": [
         {
@@ -62,56 +43,6 @@
             }
           ],
           "type": "basic"
-        }
-      ]
-    },
-    {
-      "description": "Press caps lock + delete (backspace) or Pause to restart Yabai",
-      "manipulators": [
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "delete_or_backspace",
-            "modifiers": {
-              "mandatory": ["left_shift", "left_control", "left_alt", "left_command"]
-            }
-          },
-          "to": [
-            {
-              "shell_command": "/usr/local/bin/brew services restart yabai"
-            }
-          ],
-          "conditions": [
-            {
-            "type": "device_if",
-            "identifiers": [
-                {
-                    "is_built_in_keyboard": true
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "pause"
-          },
-          "to": [
-            {
-              "shell_command": "/usr/local/bin/brew services restart yabai"
-            }
-          ],
-          "conditions": [
-            {
-            "type": "device_if",
-            "identifiers": [
-                {
-                    "vendor_id": 9639
-                }
-              ]
-            }
-          ]
         }
       ]
     },

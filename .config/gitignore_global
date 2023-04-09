@@ -1,12 +1,11 @@
 Library/
-Applications/
 Desktop/
 Documents/
 Downloads/
 Movies/
 Music/
 Pictures/
-Public/
+Sites/
 .DS_Store
 .cache/
 .local/

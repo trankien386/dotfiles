@@ -48,6 +48,9 @@ alias -g rm="rm -i"
 # BARE GIT REPO FOR DOTFILES
 alias dot='/usr/bin/git --git-dir=/Users/Kien/.dotfiles --work-tree=/Users/Kien'
 
+# Homebrew settings
+HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
+
 # BULLSHIT ALIAS
 #alias bs="bullshit-generator"
 

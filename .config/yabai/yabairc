@@ -1,5 +1,6 @@
-# bsp or float or stack
+# bsp or float or stack layout
 yabai -m config layout bsp
+#yabai -m config --space 1 layout float
 
 # Set all padding and gaps to (default: 0)
 yabai -m config top_padding    10
@@ -31,6 +32,7 @@ yabai -m rule --add app="QuickTime Player" manage=off
 yabai -m rule --add app="Stickies" manage=off
 yabai -m rule --add app="Karabiner-EventViewer" manage=off
 yabai -m rule --add app="Raycast" manage=off
+yabai -m rule --add app="IM!Clock" manage=off
 
 
 # Focus the most recent window after a window/application is closed

@@ -1,3 +1,7 @@
+# scripting addition
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
+
 # bsp or float or stack layout
 yabai -m config layout bsp
 #yabai -m config --space 1 layout float
@@ -32,15 +36,14 @@ yabai -m rule --add app="QuickTime Player" manage=off
 yabai -m rule --add app="Stickies" manage=off
 yabai -m rule --add app="Karabiner-EventViewer" manage=off
 yabai -m rule --add app="Raycast" manage=off
-yabai -m rule --add app="IM!Clock" manage=off
-
+yabai -m rule --add app="Pixelmator Pro" title="Tooltip Window" manage=off
 
 # Focus the most recent window after a window/application is closed
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus recent"
 yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus recent"
 
-# Space's split ratio
-yabai -m config split_ratio 0.7
+# Duration of window frame animation
+yabai -m config window_animation_duration 0.25
 
 # Mouse's modifier key for mouse actions
 yabai -m config mouse_modifier fn
@@ -48,10 +51,20 @@ yabai -m config mouse_modifier fn
 # Hold Mouse's modifier key with left click to resize window
 yabai -m config mouse_action1 resize
 
-# Make all windows always occupy the same space
-yabai -m config auto_balance on
+# The size distribution when a window is split
+yabai -m config split_ratio 0.56
+yabai -m config split_type auto
 
-# floating windows are always on top (default: off)
-yabai -m config window_topmost on
+# Action performed when a bsp-managed window is dropped in the center of some other bsp-managed window.
+yabai -m config mouse_drop_action stack
+
+# Make floating windows stay on top
+yabai -m config window_topmost off
+
+# Window border's color
+#yabai -m config window_border on
+#yabai -m config window_border_blur off
+#yabai -m config normal_window_border_color 0xFFE7E9E9
+#yabai -m config active_window_border_color 0xFFFF5F57
 
 echo "yabai configuration loaded."

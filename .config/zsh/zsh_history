@@ -1,0 +1,32 @@
+: 1701597450:0;/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+: 1701597519:0;brew install powerlevel10k
+: 1701597551:0;/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+: 1701597565:0;/opt/homebrew/bin/brew
+: 1701597570:0;/opt/homebrew/bin/brew list
+: 1701597676:0;/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+: 1701598089:0;zsh
+: 1701598098:0;brew
+: 1701598123:0;brew list
+: 1701598130:0;brew install powerlevel10k
+: 1701598141:0;zsh
+: 1701598366:0;brew install fzf
+: 1701598393:0;zsh
+: 1701598504:0;brew install jakehilborn/jakehilborn/displayplacer
+: 1701598520:0;displayplacer list
+: 1701598564:0;displayplacer "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 mode 5"
+: 1701598601:0;displayplacer "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 mode:5"
+: 1701598615:0;displayplacer "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 mode:4"
+: 1701598620:0;displayplacer "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 mode:5"
+: 1701598642:0;displayplacer "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 mode:4"
+: 1701598668:0;dot status
+: 1701598806:0;brew list
+: 1701598872:0;go
+: 1701598906:0;dot status
+: 1701598967:0;dot add .
+: 1701598973:0;dot status
+: 1701598985:0;dot add .config/zsh/zsh_history
+: 1701598988:0;dot commit
+: 1701598994:0;dot status
+: 1701599000:0;dot add .config/zsh/zsh_history
+: 1701599002:0;dot status
+: 1701599017:0;dot commit .

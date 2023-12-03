@@ -1,3 +1,7 @@
+# Environment variables
+path+=('/opt/homebrew/bin')
+export PATH
+
 # PROMPT
 printf '\n%.0s' {1..100}
 
@@ -9,7 +13,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # INSTALL POWERLEVEL10K
-source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
 
 # POWERLEVEL10K'S CONFIGURATION FILE
 [[ ! -f ~/.config/p10k.zsh ]] || source ~/.config/p10k.zsh
@@ -37,7 +41,7 @@ setopt SHARE_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 
 # HISTORY FILE'S LOCATION
-export HISTFILE=~/.cache/zsh_history
+export HISTFILE=~/.config/zsh/zsh_history
 
 # ENABLE COLOR FOR LS COMMAND'S OUTPUT
 export CLICOLOR=0

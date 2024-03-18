@@ -29,6 +29,7 @@ yabai -m rule --add title="Extensions" manage=off
 yabai -m rule --add title="Copy" manage=off
 yabai -m rule --add title="iCloud Progress" manage=off
 yabai -m rule --add title="Go to Folder" manage=off
+yabai -m rule --add title="Macs Fan Control" manage=off
 yabai -m rule --add app="Archive Utility" manage=off
 yabai -m rule --add app="Digital Color Meter" manage=off
 yabai -m rule --add app="Installer" manage=off
@@ -38,6 +39,7 @@ yabai -m rule --add app="Karabiner-EventViewer" manage=off
 yabai -m rule --add app="Raycast" manage=off
 yabai -m rule --add app="Pixelmator Pro" title="Tooltip Window" manage=off
 yabai -m rule --add app="Microsoft Edge" title="Picture in Picture" manage=off
+yabai -m rule --add title="Macs Fan Control" manage=off
 
 # Focus the most recent window after a window/application is closed
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus recent"

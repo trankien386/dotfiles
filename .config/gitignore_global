@@ -10,6 +10,8 @@ Applications (Parallels)/
 Applications/
 Parallels/
 Public/
+OneDrive
+OneDrive - Thang Long University
 .Trash/
 .cache/
 .local/
@@ -20,5 +22,6 @@ Public/
 .config/karabiner/karabiner.json
 .config/fsh/
 .config/qalculate
+.config/rstudio/
 .gitconfig
 .DS_Store

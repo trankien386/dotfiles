@@ -23,5 +23,6 @@ OneDrive - Thang Long University
 .config/fsh/
 .config/qalculate
 .config/rstudio/
+.config/zsh/zsh_history
 .gitconfig
 .DS_Store

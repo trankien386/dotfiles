@@ -1,1 +1,1 @@
-ZDOTDIR=$HOME/.config/zsh
+ZDOTDIR=$HOME/Library/CloudStorage/OneDrive-Personal/Configuration\ Files/macOS/Shell/zsh

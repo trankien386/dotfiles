@@ -133,6 +133,25 @@
       ]
     },
     {
+      "description": "Press Caps lock + Fn + F to make the current window float or unfloat",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "f",
+            "modifiers": {
+              "mandatory": ["left_shift", "left_control", "left_alt", "left_command", "fn"]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/usr/local/bin/yabai -m window --toggle float"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "description": "Press Caps lock + Fn + h/j/k/l to re-insert the current window, splitting the given window",
       "manipulators": [
         {
@@ -163,6 +182,7 @@
             }
           ]
         },
+
         {
           "type": "basic",
           "from": {
